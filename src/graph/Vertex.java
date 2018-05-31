@@ -9,7 +9,7 @@ public class Vertex {
 	ArrayList<Edge> adjacent; // lista de adjacencia do vertice
 	
 	// construtor da classe
-	Vertex( String label ){
+	public Vertex( String label ){
 		this.label = label;
 		this.adjacent = new ArrayList<Edge>();
 	}

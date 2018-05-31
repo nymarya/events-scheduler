@@ -31,4 +31,28 @@ public class Graph {
 		vertexList.add(v);
 	}
 	
+	/**
+	 * Recupera vertice do grafo
+	 * @param index
+	 */
+	public Vertex getVertex( int index) {
+		return vertexList.get(index);
+	}
+	
+	/**
+	 * Retorna arestas do grafo
+	 * @return
+	 */
+	public ArrayList<Edge> getEdges( ){	
+		return edgeList;
+	}
+	
+	/**
+	 * rettorna vertices do grafo
+	 * @return
+	 */
+	public ArrayList<Vertex> getVertexes( ) {
+		return vertexList;
+	}
+	
 }

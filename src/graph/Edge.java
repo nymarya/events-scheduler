@@ -9,7 +9,7 @@ public class Edge {
 
 	
 	// Construtor da classe
-	Edge( Vertex origin, Vertex destination, int weight ){
+	public Edge( Vertex origin, Vertex destination, int weight ){
 		this.origin = origin;
 		this.destination = destination;
 		this.weight = weight;
