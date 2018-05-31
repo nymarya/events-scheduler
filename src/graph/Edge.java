@@ -1,7 +1,6 @@
-package Graph;
+package graph;
 
-
-// Classe de descrição de uma aresta do grafo
+//Classe de descrição de uma aresta do grafo
 public class Edge {
 
 	private Vertex origin; // vertice na "ponta de origem" da aresta 

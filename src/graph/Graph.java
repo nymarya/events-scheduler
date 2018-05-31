@@ -1,8 +1,8 @@
-package Graph;
+package graph;
 
 import java.util.ArrayList;
 
-// classe de representação de um grafo
+//classe de representação de um grafo
 public class Graph {
 
 	ArrayList<Vertex> vertexList;

@@ -1,8 +1,8 @@
-package Graph;
+package graph;
 
 import java.util.ArrayList;
 
-// Classe de descrição de um vértice do grafo
+//Classe de descrição de um vértice do grafo
 public class Vertex {
 
 	String label; 

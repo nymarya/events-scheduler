@@ -1,6 +1,6 @@
-package Manager;
+package manager;
 
-import Graph.Graph;
+import graph.Graph;
 
 public class Engine {
 
