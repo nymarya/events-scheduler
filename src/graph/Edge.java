@@ -48,4 +48,16 @@ public class Edge {
 		this.weight = weight;
 	}	
 	
+	/**
+	 * Exibe aresta
+	 */
+	public void showEdge( ){
+		System.out.print("Vertice origem: ");
+		origin.showVertex();
+		System.out.print("Vertice destino: ");
+		destination.showVertex();
+		System.out.print("Peso: " +weight);
+		System.out.println();
+	}
+	
 }

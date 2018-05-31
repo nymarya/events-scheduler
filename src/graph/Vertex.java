@@ -22,4 +22,19 @@ public class Vertex {
 		adjacent.add(e);
 	}
 	
+	/**
+	 * Exibe vértice
+	 */
+	public void showVertex( ) {
+		System.out.println(label);
+	}
+	
+	/**
+	 * Recupera identificador do vértice
+	 * @return 
+	 */
+	public String getLabel( ){
+		return label;
+	}
+	
 }

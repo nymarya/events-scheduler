@@ -55,4 +55,26 @@ public class Graph {
 		return vertexList;
 	}
 	
+	/**
+	 * Exibe todos os vértices do grafo.
+	 */
+	public void showVextexList( ){
+		
+		for( int i=0; i<vertexList.size(); i++ ){
+			vertexList.get(i).showVertex();
+		}
+	
+	}
+	
+	/**
+	 * Exibe todas as arestas do grafo
+	 */
+	public void showEdgeList( ){
+		
+		for( int i=0; i<edgeList.size(); i++ ){
+			edgeList.get(i).showEdge();
+		}
+	
+	}
+	
 }

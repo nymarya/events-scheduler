@@ -24,36 +24,36 @@ public class Generator {
 	 */
 	public Graph generate(int numberVertex, double density) {
 		
-		int count = (int) (density * numberVertex);
+		int count = (int) ((1 - density) * 10) ;
 		
 		// cria vetores que definem a ordem dos vertices
 		// ex: [ 2 3 1] e [ 1 3 2 ]
 		ArrayList<Integer> origins = new ArrayList<Integer>(numberVertex);
-		ArrayList<Integer> destinations = new ArrayList<Integer>(numberVertex);
+		ArrayList<String> destinations = new ArrayList<String>(numberVertex);
 		
 		Graph graph = new Graph();
 		
 		//preenche arrays
 		for(Integer i = 0; i < numberVertex; i++) {
 			origins.add(i);
-			destinations.add(i);
+			destinations.add(i.toString());
 			Vertex v = new Vertex(  i.toString() );
 			graph.addVertex(v);
 		}
 		
 		long seed = System.nanoTime();
 		Collections.shuffle(origins, new Random(seed));
-		Collections.shuffle(destinations, new Random(seed));
+		//Collections.shuffle(destinations, new Random(seed));
+		int e = 1;
 		
 		// cria de fato o grafo, ignorando algumas arestas
-		for (int i : origins) {
+		for (Integer i : origins) {
 			
 			Vertex origin = graph.getVertex(i);
 			
-			Iterator<Integer> iter = destinations.iterator();
 
-			while (iter.hasNext()) {
-			    int j = iter.next();
+			for (String s : destinations) {
+				int j = Integer.parseInt(s);
 			    
 			    //cria aresta apenas entre vertices diferentes
 				if ( i != j) {
@@ -61,24 +61,27 @@ public class Generator {
 					Vertex dest = graph.getVertex(j);
 					
 					// garante a densidade do grafo
-					 if( i % count != 0) {
+					 if( e % 10 > count) {
+						 
 						 Random rand = new Random();
 
 						 // cria aresta com peso randomico
 						 int  weight = rand.nextInt(300) + 1;
-						 Edge e = new Edge(origin, dest, weight);
-						 Edge ed = new Edge(dest, origin, weight);
+						 Edge ed = new Edge(origin, dest, weight);
 						 
-						 origin.addAdjacent(e);
+						 origin.addAdjacent(ed);
 						 dest.addAdjacent(ed);
 						 
-						 graph.addEdge(e);
-						 //graph.addEdge(ed);
-					 }
+						 graph.addEdge(ed);
+					 } 
+					 
+					 e++;
 					
-					 iter.remove();
 				}
+				
 			}
+			destinations.remove(i.toString());
+			
 		}
 		
 		return graph;

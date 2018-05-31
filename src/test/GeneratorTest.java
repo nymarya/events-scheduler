@@ -21,17 +21,22 @@ public class GeneratorTest {
 	public void test() {
 		Generator gen = new Generator();
 		
-		Graph graph = gen.generate(7, 0.4);
+		Graph graph = gen.generate(7, 0.8);
 		
 		assertEquals(7, graph.getVertexes().size());
+		int nEdges = 7 * 3; //n (n-1) /2
+		assertEquals(graph.getEdges().size() , (int) (nEdges * 0.8));
 		
-		System.out.println(graph.getEdges().size());
 		
-		graph = gen.generate(17, 0.4);
+		graph = gen.generate(157, 0.8);
 		
-		assertEquals(17, graph.getVertexes().size());
+		assertEquals(157, graph.getVertexes().size());
 		
-		System.out.println(graph.getEdges().size());
+		nEdges = (graph.getVertexes().size() * (graph.getVertexes().size()-1 )) / 2; //n (n-1) /2
+		assertTrue((int) (nEdges * 0.8) <= graph.getEdges().size() );
+		
+		
+		
 	}
 
 }
