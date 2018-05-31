@@ -28,12 +28,12 @@ public class GeneratorTest {
 		assertEquals(graph.getEdges().size() , (int) (nEdges * 0.8));
 		
 		
-		graph = gen.generate(157, 0.8);
+		graph = gen.generate(157, 0.7);
 		
 		assertEquals(157, graph.getVertexes().size());
 		
-		nEdges = (graph.getVertexes().size() * (graph.getVertexes().size()-1 )) / 2; //n (n-1) /2
-		assertTrue((int) (nEdges * 0.8) <= graph.getEdges().size() );
+		nEdges = (157 * 156) / 2; //n (n-1) /2
+		assertTrue((int) (nEdges * 0.5) <= graph.getEdges().size() );
 		
 		
 		
