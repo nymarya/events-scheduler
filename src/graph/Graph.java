@@ -2,6 +2,9 @@ package graph;
 
 import java.util.ArrayList;
 
+import graph.Edge;
+import graph.Vertex;
+
 //classe de representação de um grafo
 public class Graph {
 
@@ -55,6 +58,7 @@ public class Graph {
 		return vertexList;
 	}
 	
+	
 	/**
 	 * Exibe todos os vértices do grafo.
 	 */
@@ -75,6 +79,34 @@ public class Graph {
 			edgeList.get(i).showEdge();
 		}
 	
+	}
+	
+	public Edge containsEdge( Edge e ){
+		
+		for( int i=0; i<edgeList.size(); i++ ){
+			Vertex vOrigin = edgeList.get(i).getOrigin();
+			Vertex vDestination = edgeList.get(i).getDestination();
+			
+			boolean condition1 = vOrigin == e.getOrigin() && vDestination == e.getDestination();
+			boolean condition2 = vOrigin == e.getDestination() && vDestination == e.getOrigin();
+			
+			if( condition1 || condition2 ){
+				return edgeList.get(i);
+			}
+		}
+		return null;
+		
+	}
+	
+	public Vertex containsVertex( Vertex v ){
+		
+		for( int i=0; i<vertexList.size(); i++ ){
+			if( vertexList.get(i).getLabel().equals( v.getLabel() ) ){
+				return vertexList.get(i);
+			}
+		}
+		return null;
+		
 	}
 	
 }

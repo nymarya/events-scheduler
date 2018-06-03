@@ -5,13 +5,15 @@ import java.util.ArrayList;
 //Classe de descrição de um vértice do grafo
 public class Vertex {
 
-	String label; 
-	ArrayList<Edge> adjacent; // lista de adjacencia do vertice
+	private String label; 
+	private String color;
+	private ArrayList<Edge> adjacent; // lista de adjacencia do vertice
 	
 	// construtor da classe
 	public Vertex( String label ){
 		this.label = label;
 		this.adjacent = new ArrayList<Edge>();
+		this.color = null;
 	}
 
 	/**
@@ -28,7 +30,6 @@ public class Vertex {
 	public void showVertex( ) {
 		System.out.println(label);
 	}
-	
 	/**
 	 * Recupera identificador do vértice
 	 * @return 
