@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import manager.Generator;
+import manager.Engine;
 import graph.Graph;
 
 /**
@@ -19,7 +19,7 @@ public class GeneratorTest {
 
 	@Test
 	public void test() {
-		Generator gen = new Generator();
+		Engine gen = new Engine();
 		
 		Graph graph = gen.generate(7, 0.8);
 		
