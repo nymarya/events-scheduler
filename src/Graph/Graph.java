@@ -31,4 +31,55 @@ public class Graph {
 		vertexList.add(v);
 	}
 	
+	public Vertex getVertex( int position ){
+		return vertexList.get(position);
+	}
+	
+	public void showVextexList( ){
+		
+		for( int i=0; i<vertexList.size(); i++ ){
+			vertexList.get(i).showVertex();
+		}
+	
+	}
+	
+
+	public void showEdgeList( ){
+		
+		for( int i=0; i<edgeList.size(); i++ ){
+			edgeList.get(i).showEdge();
+		}
+	
+	}
+	
+	public Vertex containsVertex( Vertex v ){
+		
+		for( int i=0; i<vertexList.size(); i++ ){
+			if( vertexList.get(i).getLabel().equals( v.getLabel() ) ){
+				return vertexList.get(i);
+			}
+		}
+		return null;
+		
+	}
+	
+	public Edge containsEdge( Edge e ){
+		
+		for( int i=0; i<edgeList.size(); i++ ){
+			Vertex vOrigin = edgeList.get(i).getOrigin();
+			Vertex vDestination = edgeList.get(i).getDestination();
+			
+			boolean condition1 = vOrigin == e.getOrigin() && vDestination == e.getDestination();
+			boolean condition2 = vOrigin == e.getDestination() && vDestination == e.getOrigin();
+			
+			if( condition1 || condition2 ){
+				return edgeList.get(i);
+			}
+		}
+		return null;
+		
+	}
+	
+	
+	
 }

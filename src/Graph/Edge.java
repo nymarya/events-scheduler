@@ -10,16 +10,29 @@ public class Edge {
 
 	
 	// Construtor da classe
-	Edge( Vertex origin, Vertex destination, int weight ){
+	public Edge( Vertex origin, Vertex destination ){
 		this.origin = origin;
 		this.destination = destination;
-		this.weight = weight;
+		this.weight = 1;
 	}
 
 	
 	/**
 	 * Métodos get e set
 	 */
+	public void showEdge( ){
+		System.out.print("Vertice origem: ");
+		origin.showVertex();
+		System.out.print("Vertice destino: ");
+		destination.showVertex();
+		System.out.print("Peso: " +weight);
+		System.out.println();
+	}
+	
+	public void increaseWeight( ){
+		weight++;
+	}
+	
 	public Vertex getOrigin() {
 		return origin;
 	}
