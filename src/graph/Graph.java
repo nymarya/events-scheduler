@@ -1,8 +1,11 @@
-package Graph;
+package graph;
 
 import java.util.ArrayList;
 
-// classe de representação de um grafo
+import graph.Edge;
+import graph.Vertex;
+
+//classe de representação de um grafo
 public class Graph {
 
 	ArrayList<Vertex> vertexList;
@@ -31,10 +34,34 @@ public class Graph {
 		vertexList.add(v);
 	}
 	
-	public Vertex getVertex( int position ){
-		return vertexList.get(position);
+	/**
+	 * Recupera vertice do grafo
+	 * @param index
+	 */
+	public Vertex getVertex( int index) {
+		return vertexList.get(index);
 	}
 	
+	/**
+	 * Retorna arestas do grafo
+	 * @return
+	 */
+	public ArrayList<Edge> getEdges( ){	
+		return edgeList;
+	}
+	
+	/**
+	 * rettorna vertices do grafo
+	 * @return
+	 */
+	public ArrayList<Vertex> getVertexes( ) {
+		return vertexList;
+	}
+	
+	
+	/**
+	 * Exibe todos os vértices do grafo.
+	 */
 	public void showVextexList( ){
 		
 		for( int i=0; i<vertexList.size(); i++ ){
@@ -43,24 +70,15 @@ public class Graph {
 	
 	}
 	
-
+	/**
+	 * Exibe todas as arestas do grafo
+	 */
 	public void showEdgeList( ){
 		
 		for( int i=0; i<edgeList.size(); i++ ){
 			edgeList.get(i).showEdge();
 		}
 	
-	}
-	
-	public Vertex containsVertex( Vertex v ){
-		
-		for( int i=0; i<vertexList.size(); i++ ){
-			if( vertexList.get(i).getLabel().equals( v.getLabel() ) ){
-				return vertexList.get(i);
-			}
-		}
-		return null;
-		
 	}
 	
 	public Edge containsEdge( Edge e ){
@@ -80,6 +98,15 @@ public class Graph {
 		
 	}
 	
-	
+	public Vertex containsVertex( Vertex v ){
+		
+		for( int i=0; i<vertexList.size(); i++ ){
+			if( vertexList.get(i).getLabel().equals( v.getLabel() ) ){
+				return vertexList.get(i);
+			}
+		}
+		return null;
+		
+	}
 	
 }

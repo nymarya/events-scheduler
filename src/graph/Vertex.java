@@ -1,8 +1,8 @@
-package Graph;
+package graph;
 
 import java.util.ArrayList;
 
-// Classe de descrição de um vértice do grafo
+//Classe de descrição de um vértice do grafo
 public class Vertex {
 
 	private String label; 
@@ -24,10 +24,16 @@ public class Vertex {
 		adjacent.add(e);
 	}
 	
+	/**
+	 * Exibe vértice
+	 */
 	public void showVertex( ) {
 		System.out.println(label);
 	}
-	
+	/**
+	 * Recupera identificador do vértice
+	 * @return 
+	 */
 	public String getLabel( ){
 		return label;
 	}

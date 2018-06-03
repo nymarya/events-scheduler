@@ -1,7 +1,6 @@
-package Graph;
+package graph;
 
-
-// Classe de descrição de uma aresta do grafo
+//Classe de descrição de uma aresta do grafo
 public class Edge {
 
 	private Vertex origin; // vertice na "ponta de origem" da aresta 
@@ -10,24 +9,23 @@ public class Edge {
 
 	
 	// Construtor da classe
+
 	public Edge( Vertex origin, Vertex destination ){
 		this.origin = origin;
 		this.destination = destination;
 		this.weight = 1;
+	}
+	
+	public Edge( Vertex origin, Vertex destination, int weight ) {
+		this.origin = origin;
+		this.destination = destination;
+		this.weight = weight;
 	}
 
 	
 	/**
 	 * Métodos get e set
 	 */
-	public void showEdge( ){
-		System.out.print("Vertice origem: ");
-		origin.showVertex();
-		System.out.print("Vertice destino: ");
-		destination.showVertex();
-		System.out.print("Peso: " +weight);
-		System.out.println();
-	}
 	
 	public void increaseWeight( ){
 		weight++;
@@ -61,5 +59,17 @@ public class Edge {
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}	
+	
+	/**
+	 * Exibe aresta
+	 */
+	public void showEdge( ){
+		System.out.print("Vertice origem: ");
+		origin.showVertex();
+		System.out.print("Vertice destino: ");
+		destination.showVertex();
+		System.out.print("Peso: " +weight);
+		System.out.println();
+	}
 	
 }
