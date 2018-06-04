@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
 import graph.Graph;
@@ -24,7 +25,7 @@ public class Engine {
 	}
 	
 	/**
-	 * Ler arquivo de entrada e separar as atividades
+	 * L� arquivo de entrada e separa as atividades
 	 */
 	public void readArchive() {
 		
@@ -68,7 +69,7 @@ public class Engine {
 	
 	
 	/**
-	 * Criar grafo a partir de arquivo de texto com as especificações do evento:
+	 * Cria grafo a partir de arquivo de texto com as especificações do evento:
 	 * Atividades: vertices; Relação entre vertices: arestas.
 	 */
 	public void createGraph(  ) {
@@ -197,6 +198,40 @@ public class Engine {
 		}
 		
 		return graph;
+	}
+	
+
+
+	
+	private static void orderByWeight(ArrayList<Vertex> list) {
+        Collections.sort(list, new Comparator<Vertex>() {
+
+			@Override
+			public int compare(Vertex v1, Vertex v2) {
+                return v1.compareTo(v2);
+			}
+			
+     });
+    }
+	
+	public void generateColouringGraph( ){
+		
+		ArrayList<Vertex> vertexes = new ArrayList<Vertex>();
+		
+		
+		vertexes = graph.getVertexes();
+		
+		
+		// ordenar lista de vertices
+		// graph.showVextexList();
+		
+		// orderByWeight(graph.getVertexList());
+		
+		
+		// escolher vertice de maior grau
+		
+		
+		
 	}
 	
 }

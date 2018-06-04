@@ -2,8 +2,9 @@ package graph;
 
 import java.util.ArrayList;
 
+
 //Classe de descrição de um vértice do grafo
-public class Vertex {
+public class Vertex implements Comparable<Vertex> {
 
 	private String label; 
 	private String color;
@@ -37,5 +38,26 @@ public class Vertex {
 	public String getLabel( ){
 		return label;
 	}
+	
+	/**
+	 * Recupera o grau do vertice
+	 * @return grau do vertice
+	 */
+	public int getDegree( ){
+		return adjacent.size();
+	}
+	
+	@Override
+    public int compareTo(Vertex v2) {
+        if (this.getDegree() < v2.getDegree()) {
+            return -1;
+        }
+        if (this.getDegree() > v2.getDegree()) {
+            return 1;
+        }
+        return 0;
+    }
+
+	
 	
 }

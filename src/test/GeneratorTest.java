@@ -8,8 +8,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import manager.Engine;
 import graph.Graph;
+import manager.Engine;
 
 /**
  * @author mayra
