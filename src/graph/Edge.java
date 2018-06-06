@@ -1,7 +1,9 @@
 package graph;
 
+import java.io.Serializable;
+
 //Classe de descrição de uma aresta do grafo
-public class Edge {
+public class Edge implements Serializable {
 
 	private Vertex origin; // vertice na "ponta de origem" da aresta 
 	private Vertex destination; // vertice de destino da aresta
@@ -81,11 +83,15 @@ public class Edge {
 		
 		if( this.origin == v ){
 			return this.destination;
-		} else {
+		} else if ( this.destination == v ) {
 			return this.origin;
+		} else {
+			return null;
 		}
 		
 	}
+	
+
 	
 	
 	/* TENTATIVA DE SOBRESCRITA DO EQUALS. DEU ERRADO. PRECISA PRO CONTAINS DO ARRAYLIST

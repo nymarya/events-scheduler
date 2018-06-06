@@ -19,7 +19,8 @@ public class Engine {
 	private Graph graph;
 	private ArrayList< ArrayList <String> > activities; 
 	
-	private ArrayList<Vertex> vertexes;
+	private Graph graphTemp;
+	ArrayList<Vertex> vertexes;
 	
 	public Engine( ){
 		activities = new ArrayList< ArrayList<String> >();
@@ -36,7 +37,7 @@ public class Engine {
 		
 		
 	    try {
-	    	FileReader arq = new FileReader(absolutePath+"/src/data/teste2.txt");
+	    	FileReader arq = new FileReader(absolutePath+"/src/data/teste4.txt");
 	    	BufferedReader lerArq = new BufferedReader(arq);
 	    	
 	    	String linha = lerArq.readLine(); // lê a primeira linha
@@ -226,11 +227,23 @@ public class Engine {
 	 */
 	public void mergeVertexes( Vertex v1, Vertex v2 ){
 		
+		
 		ArrayList<Edge> adjV1 = v1.getAdjacentVertexes();
 		ArrayList<Edge> adjV2 = v2.getAdjacentVertexes();
 		
 		int dif = 0;
+
 		
+		/*System.out.println("===================");
+		for( int i=0; i<adjV1.size(); i++ ){
+			adjV1.get(i).getVertex(v1).showVertex();
+		}
+		System.out.println("===================");
+		for( int i=0; i<adjV2.size(); i++ ){
+			adjV2.get(i).getVertex(v2).showVertex();
+		}
+		System.out.println("===================");*/
+
 		// percorre lista de adjacencia de v2
 		for( int i=0; i<adjV2.size(); i++ ){
 			
@@ -250,17 +263,32 @@ public class Engine {
 			
 			if( dif == adjV1.size() ){
 				
-				System.out.print("ADICIONAAAA e REMOVEEE: ");
+				//System.out.print("ADICIONAAA: ");
+				//adjV2.get(i).getVertex(v2).showVertex();
+
+				// cria aresta e adiciona o vertice lá
+				Edge edge = new Edge( v1, adjV2.get(i).getVertex(v2) );
+				graphTemp.addEdge(edge);
 				// adiciona na lista de adjacencia de v1
-				adjV1.add( adjV2.get(i) );
-				// remove da lista de vertices
-				vertexes.remove( v2 );
-				v2.showVertex();
+				adjV1.add(edge);
 				
 			}
 			
 		}
-		
+
+		// remove da lista de vertices
+		// System.out.print("REMOVEEE: ");
+		// v2.showVertex();
+		vertexes.remove( v2 );
+		// remove da lista de arestas tb
+		ArrayList<Edge> edges = graphTemp.getEdges();
+		for( int i=0; i<edges.size(); i++ ){
+			
+			if( edges.get(i).getVertex(v2) != null ){
+				edges.remove(i);
+			}
+		}
+		//graphTemp.showVextexList();
 		
 	}
 	
@@ -271,25 +299,44 @@ public class Engine {
 	 */
 	public void generateColouringGraph( ){
 		
-		vertexes = graph.getVertexes();
-				
+		// clonando grafo, vertices e arestas
+		graphTemp = graph.clone();
+	
+		vertexes = graphTemp.getVertexes();
+		
 		// ordena lista de vertices pelo grau
 		orderByWeight(vertexes);
 		
+		// inicializa cor
 		int color = 1;
 		
 		// percorre lista de vertices
 		for( int i=0; i<vertexes.size(); i++ ){
+			
 			// escolhe vertice de maior grau
 			Vertex vTemp = vertexes.get(i);
+				
 			
 			// TESTEEEEEEEEE
-			System.out.println("ITERAÇÃO "+(i+1)+": ");
+			/*System.out.println("ITERAÇÃO "+(i+1)+": ");
 			System.out.print("Vertice analisado: ");
-			vTemp.showVertex();
+			vTemp.showVertex();*/
 			// FIM TESTEEEEEE
 			
-		
+			// colorir no grafo original
+			int indexV = graphTemp.findVertexIndex(vTemp);
+			
+
+			if( indexV != -1 ){
+				Vertex v = graph.getVertex(indexV);
+				v.setColor("color"+color);
+			}
+			
+			
+			System.out.print("COR " + color +" NO ");
+			vTemp.showVertex();
+			
+			
 			// recupera vertices adjacentes a vTemp
 			ArrayList<Edge> adjacents = vTemp.getAdjacentVertexes();
 			
@@ -298,10 +345,9 @@ public class Engine {
 				
 				Edge eTemp = adjacents.get(j); // pega uma das arestas adjacentes	
 				Vertex vAdj = eTemp.getVertex(vTemp); // pega o vertice dessa aresta
-				
 			
-				System.out.print("Adjacentes: ");
-				vAdj.showVertex();
+				//System.out.print("Adjacentes: ");
+				//vAdj.showVertex();
 				
 				// recupera lista de adjacentes do vertice adjacente analisado
 				ArrayList<Edge> adjAdjVertexes = vAdj.getAdjacentVertexes();
@@ -314,24 +360,21 @@ public class Engine {
 					
 					int dif = 0;
 					
-					if( vAdjAdj != vTemp && vAdjAdj != vTemp ){
+					//System.out.print("Adjacentes do adjacente: ");
+					//vAdjAdj.showVertex();
+					
+					if( vAdjAdj != vTemp && vAdjAdj != vTemp && vAdjAdj.getColor() == null ){
 						
 						
 						/////////////////////////////////////////
 						// ESSA PARTE AQUI VOU TENTAR ALTERAR AINDA, O CONTAINS 
 						// DO ARRAYLIST N FUNCIONOU, POR ISSO FIZ ASSIM
-						/////////////////////////////////////////	
-						
-						// verifica se a lista de adjacentes NAO contem vAdjvAdj
-						/*if( !adjacents.contains(eAdjAdj) ){
-							System.out.print("ESSE VAAAAAI: ");
-						}*/
-						
-						
-						// percorre lista de adjacencia de vTemp
+						/////////////////////////////////////////					
+						// percorre lista de adjacencia de vTemp ( adjacents.contains(vAdjvAdj) )
 						for( int p=0; p<adjacents.size(); p++ ){
 							
 							Vertex v = adjacents.get(p).getVertex(vTemp);
+							
 							if( v == vAdjAdj ){
 								break;
 							} else {
@@ -342,45 +385,36 @@ public class Engine {
 						
 						if( dif == adjacents.size() ){
 							
+							
+
 							// colorir no grafo original
-							int indexV = graph.findVertexIndex(vAdjAdj);
+							indexV = graphTemp.findVertexIndex(vAdjAdj);
 							
-							System.out.print((indexV)+" - ");
+
+							if( indexV != -1 ){
+								Vertex v = graph.getVertex(indexV);
+								v.setColor("color"+color);
+							}
+							
+							
+							System.out.print("COR " + color +" NO ");
 							vAdjAdj.showVertex();
-							//graph.getVertex(indexV);
 							
-							//color++;
-							//System.out.print("ESSE VAAAAAI: ");
-							
-							
-							/*System.out.println("========ANTES==========");
-							for( int a=0; a<vertexes.size(); a++ ) {
-								vertexes.get(a).showVertex();
-							}
-							System.out.println("=======================");
-							*/
-							// MERGE - ULTIMA LINHA DO ALGORITMO
+							// merge vertices
 							mergeVertexes(vTemp, vAdjAdj);
-							/*
-							System.out.println("========DEPOIS==========");
-							for( int a=0; a<vertexes.size(); a++ ) {
-								vertexes.get(a).showVertex();
-							}
-							System.out.println("=======================");
-							*/
-							
+
+
 							
 						}
-						//vAdjAdj.showVertex();
-						
-					}
-						
-	
 					
-					
+						
+					}	
 				}
 				
+				
 			}
+			
+			color++;
 			
 		}
 		

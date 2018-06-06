@@ -1,10 +1,11 @@
 package graph;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
 //Classe de descrição de um vértice do grafo
-public class Vertex implements Comparable<Vertex> {
+public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 
 	private String label; 
 	private String color;
@@ -80,7 +81,7 @@ public class Vertex implements Comparable<Vertex> {
         return this.getLabel().equals(other.getLabel());
     }
 
-
+	
 
 	
 	

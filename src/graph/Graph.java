@@ -1,12 +1,19 @@
 package graph;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import graph.Edge;
 import graph.Vertex;
 
 //classe de representação de um grafo
-public class Graph {
+public class Graph implements Cloneable, Serializable {
 
 	private ArrayList<Vertex> vertexList;
 	private ArrayList<Edge> edgeList;
@@ -120,6 +127,37 @@ public class Graph {
 		
 	}
 	
+	
+	
+	@Override
+	public Graph clone()
+	{
+		Graph object = null;
+		try {
+			FileOutputStream fileOutputStream = new FileOutputStream("object.dat");
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+			objectOutputStream.writeObject(this);
+			fileOutputStream.flush();
+			fileOutputStream.close();
+			objectOutputStream.flush();
+			objectOutputStream.close();
+			FileInputStream fileInputStream = new FileInputStream("object.dat");
+			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+			object = (Graph) objectInputStream.readObject();
+	                fileInputStream.close();
+			objectInputStream.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return object;
+	}
 	
 	
 }
