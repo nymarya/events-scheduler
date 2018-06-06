@@ -105,11 +105,20 @@ public class Graph {
 				return vertexList.get(i);
 			}
 		}
-		return null;
+		return null; 
 		
 	}
 
-
+	/**
+	 * Encontra indice de vertice v na lista de vertices
+	 * @param v Vertice
+	 * @return Indice do vertice na lista
+	 */
+	public int findVertexIndex( Vertex v ){
+		
+		return vertexList.indexOf(v);
+		
+	}
 	
 	
 	

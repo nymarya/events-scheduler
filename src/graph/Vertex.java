@@ -47,17 +47,6 @@ public class Vertex implements Comparable<Vertex> {
 		return adjacent.size();
 	}
 	
-	@Override
-    public int compareTo(Vertex v2) {
-        if (this.getDegree() >= v2.getDegree()) {
-            return -1;
-        }
-        if (this.getDegree() < v2.getDegree()) {
-            return 1;
-        }
-        return 0;
-    }
-	
 	public ArrayList<Edge> getAdjacentVertexes(){
 		return adjacent;
 	}
@@ -70,7 +59,28 @@ public class Vertex implements Comparable<Vertex> {
 		this.color = color;
 	}
 	
+	@Override
+    public int compareTo(Vertex v2) {
+        if (this.getDegree() >= v2.getDegree()) {
+            return -1;
+        }
+        if (this.getDegree() < v2.getDegree()) {
+            return 1;
+        }
+        return 0;
+    }
 	
+	
+	@Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Vertex)) {
+            return false;
+        }
+        final Vertex other = (Vertex) obj;
+        return this.getLabel().equals(other.getLabel());
+    }
+
+
 
 	
 	

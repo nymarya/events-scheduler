@@ -19,6 +19,7 @@ public class Engine {
 	private Graph graph;
 	private ArrayList< ArrayList <String> > activities; 
 	
+	private ArrayList<Vertex> vertexes;
 	
 	public Engine( ){
 		activities = new ArrayList< ArrayList<String> >();
@@ -123,7 +124,7 @@ public class Engine {
 			}
 		}
 				
-		//graph.showVextexList();
+		graph.showVextexList();
 		//graph.showEdgeList();
 
 				
@@ -202,7 +203,10 @@ public class Engine {
 	
 
 
-	
+	/**
+	 * Ordena uma lista de vertices em ordem decrescente do grau
+	 * @param list Lista de vertices
+	 */
 	private static void orderByWeight(ArrayList<Vertex> list) {
         Collections.sort(list, new Comparator<Vertex>() {
 
@@ -214,16 +218,67 @@ public class Engine {
      });
     }
 	
+	/**
+	 * Une dois vertices
+	 * @param ArrayList<Vertex> vertexes Copia da lista de vertices do grafo
+	 * @param v1 Vertice 1
+	 * @param v2 Vertice 2
+	 */
+	public void mergeVertexes( Vertex v1, Vertex v2 ){
+		
+		ArrayList<Edge> adjV1 = v1.getAdjacentVertexes();
+		ArrayList<Edge> adjV2 = v2.getAdjacentVertexes();
+		
+		int dif = 0;
+		
+		// percorre lista de adjacencia de v2
+		for( int i=0; i<adjV2.size(); i++ ){
+			
+			Vertex vAdV2 = adjV2.get(i).getVertex(v2);
+
+			for( int j=0; j<adjV1.size(); j++ ){
+				
+				Vertex vAdV1 = adjV1.get(j).getVertex(v1);
+				
+				if( vAdV1 == vAdV2 ){
+					break;
+				} else {
+					dif++;
+				}
+			}
+			
+			
+			if( dif == adjV1.size() ){
+				
+				System.out.print("ADICIONAAAA e REMOVEEE: ");
+				// adiciona na lista de adjacencia de v1
+				adjV1.add( adjV2.get(i) );
+				// remove da lista de vertices
+				vertexes.remove( v2 );
+				v2.showVertex();
+				
+			}
+			
+		}
+		
+		
+	}
+	
+	
+	/**
+	 * Gera grafo colorido. Baseado no algoritmo de Burke 
+	 * @link http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.6.2734&rep=rep1&type=pdf
+	 */
 	public void generateColouringGraph( ){
 		
-		ArrayList<Vertex> vertexes = graph.getVertexes();
+		vertexes = graph.getVertexes();
 				
 		// ordena lista de vertices pelo grau
 		orderByWeight(vertexes);
 		
 		int color = 1;
 		
-		// percorre lista
+		// percorre lista de vertices
 		for( int i=0; i<vertexes.size(); i++ ){
 			// escolhe vertice de maior grau
 			Vertex vTemp = vertexes.get(i);
@@ -242,7 +297,6 @@ public class Engine {
 			for( int j=0; j<adjacents.size(); j++ ){
 				
 				Edge eTemp = adjacents.get(j); // pega uma das arestas adjacentes	
-				
 				Vertex vAdj = eTemp.getVertex(vTemp); // pega o vertice dessa aresta
 				
 			
@@ -254,8 +308,6 @@ public class Engine {
 				
 				// percorre lista de adjacentes do vertice adjacente analisado
 				for( int k=0; k<adjAdjVertexes.size(); k++ ){
-					
-					
 					
 					Edge eAdjAdj = adjAdjVertexes.get(k); // pega uma das arestas adjacentes
 					Vertex vAdjAdj = eAdjAdj.getVertex(vAdj); // pega o vertice dessa aresta
@@ -269,6 +321,13 @@ public class Engine {
 						// ESSA PARTE AQUI VOU TENTAR ALTERAR AINDA, O CONTAINS 
 						// DO ARRAYLIST N FUNCIONOU, POR ISSO FIZ ASSIM
 						/////////////////////////////////////////	
+						
+						// verifica se a lista de adjacentes NAO contem vAdjvAdj
+						/*if( !adjacents.contains(eAdjAdj) ){
+							System.out.print("ESSE VAAAAAI: ");
+						}*/
+						
+						
 						// percorre lista de adjacencia de vTemp
 						for( int p=0; p<adjacents.size(); p++ ){
 							
@@ -283,14 +342,36 @@ public class Engine {
 						
 						if( dif == adjacents.size() ){
 							
-							// MERGE - ULTIMA LINHA DO ALGORITMO
+							// colorir no grafo original
+							int indexV = graph.findVertexIndex(vAdjAdj);
 							
+							System.out.print((indexV)+" - ");
+							vAdjAdj.showVertex();
+							//graph.getVertex(indexV);
+							
+							//color++;
+							//System.out.print("ESSE VAAAAAI: ");
+							
+							
+							/*System.out.println("========ANTES==========");
+							for( int a=0; a<vertexes.size(); a++ ) {
+								vertexes.get(a).showVertex();
+							}
+							System.out.println("=======================");
+							*/
+							// MERGE - ULTIMA LINHA DO ALGORITMO
+							mergeVertexes(vTemp, vAdjAdj);
 							/*
-							vAdjAdj.setColor("color"+color);
-							color++;
-							System.out.print("ESSE VAAAAAI: ");
-							vAdjAdj.showVertex();*/
+							System.out.println("========DEPOIS==========");
+							for( int a=0; a<vertexes.size(); a++ ) {
+								vertexes.get(a).showVertex();
+							}
+							System.out.println("=======================");
+							*/
+							
+							
 						}
+						//vAdjAdj.showVertex();
 						
 					}
 						

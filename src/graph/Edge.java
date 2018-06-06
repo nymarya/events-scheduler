@@ -88,4 +88,31 @@ public class Edge {
 	}
 	
 	
+	/* TENTATIVA DE SOBRESCRITA DO EQUALS. DEU ERRADO. PRECISA PRO CONTAINS DO ARRAYLIST
+	@Override
+	public boolean equals(Object obj) {
+		
+	    if (obj instanceof Edge) {
+	    	Edge edge = (Edge) obj;
+	    	
+	    	boolean condition1 = this.origin == edge.getOrigin() && this.destination == edge.getDestination();
+	    	boolean condition2 = this.destination == edge.getOrigin() && this.origin == edge.getDestination();
+
+			if( condition1 || condition2 ){
+		    	System.out.println("aparece");
+
+				return true;
+			} else {
+				return false;
+			}
+	    } else {
+	    	return false;
+	    }
+	    
+	}*/
+	
+	
+
+	
+	
 }
