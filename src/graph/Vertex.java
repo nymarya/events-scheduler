@@ -49,14 +49,28 @@ public class Vertex implements Comparable<Vertex> {
 	
 	@Override
     public int compareTo(Vertex v2) {
-        if (this.getDegree() < v2.getDegree()) {
+        if (this.getDegree() >= v2.getDegree()) {
             return -1;
         }
-        if (this.getDegree() > v2.getDegree()) {
+        if (this.getDegree() < v2.getDegree()) {
             return 1;
         }
         return 0;
     }
+	
+	public ArrayList<Edge> getAdjacentVertexes(){
+		return adjacent;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+	
+	
 
 	
 	

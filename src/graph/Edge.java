@@ -72,4 +72,20 @@ public class Edge {
 		System.out.println();
 	}
 	
+	/**
+	 * Retorna o vertice associado na aresta
+	 * @param v Vertice 
+	 * @return vertice associado a v na aresta
+	 */
+	public Vertex getVertex( Vertex v ){
+		
+		if( this.origin == v ){
+			return this.destination;
+		} else {
+			return this.origin;
+		}
+		
+	}
+	
+	
 }

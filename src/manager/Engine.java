@@ -25,7 +25,7 @@ public class Engine {
 	}
 	
 	/**
-	 * L� arquivo de entrada e separa as atividades
+	 * Lê arquivo de entrada e separa as atividades
 	 */
 	public void readArchive() {
 		
@@ -35,7 +35,7 @@ public class Engine {
 		
 		
 	    try {
-	    	FileReader arq = new FileReader(absolutePath+"/src/data/teste1.txt");
+	    	FileReader arq = new FileReader(absolutePath+"/src/data/teste2.txt");
 	    	BufferedReader lerArq = new BufferedReader(arq);
 	    	
 	    	String linha = lerArq.readLine(); // lê a primeira linha
@@ -76,7 +76,7 @@ public class Engine {
 				
 		readArchive();
 		
-		Graph graph = new Graph();
+		graph = new Graph();
 		
 		
 		for( int x=0; x < activities.size(); x++ ){
@@ -123,8 +123,8 @@ public class Engine {
 			}
 		}
 				
-		graph.showVextexList();
-		graph.showEdgeList();
+		//graph.showVextexList();
+		//graph.showEdgeList();
 
 				
 	}
@@ -216,19 +216,94 @@ public class Engine {
 	
 	public void generateColouringGraph( ){
 		
-		ArrayList<Vertex> vertexes = new ArrayList<Vertex>();
+		ArrayList<Vertex> vertexes = graph.getVertexes();
+				
+		// ordena lista de vertices pelo grau
+		orderByWeight(vertexes);
+		
+		int color = 1;
+		
+		// percorre lista
+		for( int i=0; i<vertexes.size(); i++ ){
+			// escolhe vertice de maior grau
+			Vertex vTemp = vertexes.get(i);
+			
+			// TESTEEEEEEEEE
+			System.out.println("ITERAÇÃO "+(i+1)+": ");
+			System.out.print("Vertice analisado: ");
+			vTemp.showVertex();
+			// FIM TESTEEEEEE
+			
+		
+			// recupera vertices adjacentes a vTemp
+			ArrayList<Edge> adjacents = vTemp.getAdjacentVertexes();
+			
+			// percorre lista de adjacentes a vTemp
+			for( int j=0; j<adjacents.size(); j++ ){
+				
+				Edge eTemp = adjacents.get(j); // pega uma das arestas adjacentes	
+				
+				Vertex vAdj = eTemp.getVertex(vTemp); // pega o vertice dessa aresta
+				
+			
+				System.out.print("Adjacentes: ");
+				vAdj.showVertex();
+				
+				// recupera lista de adjacentes do vertice adjacente analisado
+				ArrayList<Edge> adjAdjVertexes = vAdj.getAdjacentVertexes();
+				
+				// percorre lista de adjacentes do vertice adjacente analisado
+				for( int k=0; k<adjAdjVertexes.size(); k++ ){
+					
+					
+					
+					Edge eAdjAdj = adjAdjVertexes.get(k); // pega uma das arestas adjacentes
+					Vertex vAdjAdj = eAdjAdj.getVertex(vAdj); // pega o vertice dessa aresta
+					
+					int dif = 0;
+					
+					if( vAdjAdj != vTemp && vAdjAdj != vTemp ){
+						
+						
+						/////////////////////////////////////////
+						// ESSA PARTE AQUI VOU TENTAR ALTERAR AINDA, O CONTAINS 
+						// DO ARRAYLIST N FUNCIONOU, POR ISSO FIZ ASSIM
+						/////////////////////////////////////////	
+						// percorre lista de adjacencia de vTemp
+						for( int p=0; p<adjacents.size(); p++ ){
+							
+							Vertex v = adjacents.get(p).getVertex(vTemp);
+							if( v == vAdjAdj ){
+								break;
+							} else {
+								dif++;
+							}
+							
+						}
+						
+						if( dif == adjacents.size() ){
+							
+							// MERGE - ULTIMA LINHA DO ALGORITMO
+							
+							/*
+							vAdjAdj.setColor("color"+color);
+							color++;
+							System.out.print("ESSE VAAAAAI: ");
+							vAdjAdj.showVertex();*/
+						}
+						
+					}
+						
+	
+					
+					
+				}
+				
+			}
+			
+		}
 		
 		
-		vertexes = graph.getVertexes();
-		
-		
-		// ordenar lista de vertices
-		// graph.showVextexList();
-		
-		// orderByWeight(graph.getVertexList());
-		
-		
-		// escolher vertice de maior grau
 		
 		
 		

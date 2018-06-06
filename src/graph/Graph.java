@@ -8,8 +8,8 @@ import graph.Vertex;
 //classe de representação de um grafo
 public class Graph {
 
-	ArrayList<Vertex> vertexList;
-	ArrayList<Edge> edgeList;
+	private ArrayList<Vertex> vertexList;
+	private ArrayList<Edge> edgeList;
 	
 	
 	// construtor - inicializa listas
