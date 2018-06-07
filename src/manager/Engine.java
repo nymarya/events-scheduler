@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.Random;
 
 import graph.Graph;
@@ -208,7 +210,7 @@ public class Engine {
 	 * Ordena uma lista de vertices em ordem decrescente do grau
 	 * @param list Lista de vertices
 	 */
-	public static void orderByWeight(ArrayList<Vertex> list) {
+	public static void orderByDegree(ArrayList<Vertex> list) {
         Collections.sort(list, new Comparator<Vertex>() {
 
 			@Override
@@ -237,7 +239,7 @@ public class Engine {
 			//recupera o vertice vizinho a v2 pela aresta atual
 			Vertex vAdV2 = adjacentV2.getVertex(v2);
 			
-			//checa de vAdV2 e v1
+			//checa se vAdV2 e v1 são vizinhos
 			boolean isAdjacent = false;
 			for( Edge adjacentV1: adjacentsV1) {
 				//recupera o vizinho de v1
@@ -288,26 +290,20 @@ public class Engine {
 		vertexes = graphTemp.getVertexes();
 		
 		// ordena lista de vertices pelo grau
-		orderByWeight(vertexes);
+		orderByDegree(vertexes);
 		
 		// inicializa cor
 		int color = 1;
 		
 		// percorre lista de vertices
-		for( int i=0; i<vertexes.size(); i++ ){
+		ListIterator<Vertex> itr = vertexes.listIterator();
+		while( itr.hasNext()){
 			
 			// escolhe vertice de maior grau
-			Vertex vTemp = vertexes.get(i);
-				
-			
-			// TESTEEEEEEEEE
-			/*System.out.println("ITERAÇÃO "+(i+1)+": ");
-			System.out.print("Vertice analisado: ");
-			vTemp.showVertex();*/
-			// FIM TESTEEEEEE
+			Vertex vCurrent = itr.next();
 			
 			// colorir no grafo original
-			int indexV = graphTemp.findVertexIndex(vTemp);
+			int indexV = graphTemp.findVertexIndex(vCurrent);
 			
 
 			if( indexV != -1 ){
@@ -317,91 +313,74 @@ public class Engine {
 			
 			
 			System.out.print("COR " + color +" NO ");
-			vTemp.showVertex();
+			vCurrent.showVertex();
 			
+			//Enquanto existir vertice que possua vizinho comum a vCurrent
+			// ou existir algum vértice que não é adjacente a vCurrent,
+			// vCurrent não irá mudar
 			
-			// recupera vertices adjacentes a vTemp
-			ArrayList<Edge> adjacents = vTemp.getAdjacentVertexes();
+			//DEF de vertice 'conhecido': ambos possuem um vizinho em comum
+			//não são adjacentes
 			
-			// percorre lista de adjacentes a vTemp
-			for( int j=0; j<adjacents.size(); j++ ){
 				
-				Edge eTemp = adjacents.get(j); // pega uma das arestas adjacentes	
-				Vertex vAdj = eTemp.getVertex(vTemp); // pega o vertice dessa aresta
-			
-				//System.out.print("Adjacentes: ");
-				//vAdj.showVertex();
+			// recupera vértice 'conhecido' de vCurrent, faz o merge e colore
+			Iterator<Edge> vCurrentIterator = vCurrent.getAdjacentVertexes().iterator();
+			while( vCurrentIterator.hasNext()) {
+				vCurrentIterator = vCurrent.getAdjacentVertexes().iterator();
+				Edge currentEdge = vCurrentIterator.next();
+				Vertex known = currentEdge.getVertex(vCurrent);
 				
-				// recupera lista de adjacentes do vertice adjacente analisado
-				ArrayList<Edge> adjAdjVertexes = vAdj.getAdjacentVertexes();
+				// se o vertice não estiver colorido, colore
+				if( known.getColor() == null) {
+					indexV = graphTemp.findVertexIndex(known);
+					
+					if( indexV != -1 ){
+						Vertex v = graph.getVertex(indexV);
+						v.setColor("color"+color);
+					}
+					
+					// merge vertices
+					mergeVertexes(vCurrent, known);
+					
 				
-				// percorre lista de adjacentes do vertice adjacente analisado
-				for( int k=0; k<adjAdjVertexes.size(); k++ ){
-					
-					Edge eAdjAdj = adjAdjVertexes.get(k); // pega uma das arestas adjacentes
-					Vertex vAdjAdj = eAdjAdj.getVertex(vAdj); // pega o vertice dessa aresta
-					
-					int dif = 0;
-					
-					//System.out.print("Adjacentes do adjacente: ");
-					//vAdjAdj.showVertex();
-					
-					if( vAdjAdj != vTemp && vAdjAdj != vTemp && vAdjAdj.getColor() == null ){
-						
-						
-						/////////////////////////////////////////
-						// ESSA PARTE AQUI VOU TENTAR ALTERAR AINDA, O CONTAINS 
-						// DO ARRAYLIST N FUNCIONOU, POR ISSO FIZ ASSIM
-						/////////////////////////////////////////					
-						// percorre lista de adjacencia de vTemp ( adjacents.contains(vAdjvAdj) )
-						for( int p=0; p<adjacents.size(); p++ ){
-							
-							Vertex v = adjacents.get(p).getVertex(vTemp);
-							
-							if( v == vAdjAdj ){
-								break;
-							} else {
-								dif++;
-							}
-							
-						}
-						
-						if( dif == adjacents.size() ){
-							
-							
-
-							// colorir no grafo original
-							indexV = graphTemp.findVertexIndex(vAdjAdj);
-							
-
-							if( indexV != -1 ){
-								Vertex v = graph.getVertex(indexV);
-								v.setColor("color"+color);
-							}
-							
-							
-							System.out.print("COR " + color +" NO ");
-							vAdjAdj.showVertex();
-							
-							// merge vertices
-							mergeVertexes(vTemp, vAdjAdj);
-
-
-							
-						}
-					
-						
-					}	
 				}
+			}
+			
+			// se não houver mais 'conhecidos', pegar vertice de maior grau
+			// que não são adjacentes a vCurrent
+			ListIterator<Vertex> copyIterator = vertexes.listIterator(itr.nextIndex());
+			while( copyIterator.hasNext()) {
+				Vertex neighbor = copyIterator.next();
 				
-				
+				if( !neighbor.isAdjacent(vCurrent) ) {
+					
+					// se o vertice não estiver colorido, colore
+					if( neighbor.getColor() == null) {
+						indexV = graphTemp.findVertexIndex(neighbor);
+						
+						if( indexV != -1 ){
+							Vertex v = graph.getVertex(indexV);
+							v.setColor("color"+color);
+						}
+						
+						// merge vertices
+						mergeVertexes(vCurrent, neighbor);
+					}
+				}
 			}
 			
 			color++;
+			// remove da lista de arestas tb
+			ArrayList<Edge> edges = graphTemp.getEdges();
+			for( int i=0; i<edges.size(); i++ ){
+				
+				if( edges.get(i).getVertex(vCurrent) != null ){
+					edges.remove(i);
+				}
+			}
+			itr.remove();
 			
 		}
-		
-		
 		
 		
 		
@@ -411,7 +390,7 @@ public class Engine {
 	 * 
 	 * @return
 	 */
-	public Graph getGraph() {
+	public Graph getGraphTemp() {
 		return this.graphTemp;
 	}
 	
@@ -419,9 +398,25 @@ public class Engine {
 	 * 
 	 * @param graph
 	 */
-	public void setGraph (Graph graph) {
+	public void setGraphTemp (Graph graph) {
 		this.graphTemp = graph;
 		vertexes = graphTemp.getVertexes();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Graph getGraph() {
+		return this.graph;
+	}
+	
+	/**
+	 * 
+	 * @param graph
+	 */
+	public void setGraph (Graph graph) {
+		this.graph = graph;
 	}
 	
 }

@@ -3,6 +3,8 @@ package test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 import org.junit.Test;
 
@@ -125,20 +127,17 @@ public class BurkeTest {
 		graph.addEdge(e16);
 		
 		
+		// Testa metodo merge
 		Engine engine = new Engine();
-		engine.setGraph(graph.clone());
+		engine.setGraphTemp(graph.clone());
 		
-		v5 = engine.getGraph().getVertex(4);
-		v3 = engine.getGraph().getVertex(2);
-		v7 = engine.getGraph().getVertex(6);
-		v10 = engine.getGraph().getVertex(9);
-		v11 = engine.getGraph().getVertex(10);
-		v12 = engine.getGraph().getVertex(11);
-		
-		ArrayList<Edge> edges= v9.getAdjacentVertexes();
-		for (Edge e : edges) {
-			e.showEdge();
-		}
+		v5 = engine.getGraphTemp().getVertex(4);
+		v3 = engine.getGraphTemp().getVertex(2);
+		v7 = engine.getGraphTemp().getVertex(6);
+		v10 = engine.getGraphTemp().getVertex(9);
+		v11 = engine.getGraphTemp().getVertex(10);
+		v12 = engine.getGraphTemp().getVertex(11);
+	
 		
 		
 		engine.mergeVertexes(v5, v3);
@@ -150,6 +149,14 @@ public class BurkeTest {
 		assertTrue(v5.isAdjacent(v10));
 		assertTrue(v5.isAdjacent(v12));
 		assertTrue(v5.isAdjacent(v11));
+		
+		//Teste coloração
+		engine.setGraph(graph);
+		engine.generateColouringGraph();
+		
+		graph.showVextexList();
+		
+		
 		
 	}
 
