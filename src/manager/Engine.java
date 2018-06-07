@@ -262,17 +262,10 @@ public class Engine {
 		// TODO: implementar metodo q remove vertice com essa logica abaixo
 		
 		// remove da lista de vertices
-		// System.out.print("REMOVEEE: ");
-		// v2.showVertex();
-		vertexes.remove( v2 );
-		// remove da lista de arestas tb
-		ArrayList<Edge> edges = graphTemp.getEdges();
-		for( int i=0; i<edges.size(); i++ ){
-			
-			if( edges.get(i).getVertex(v2) != null ){
-				edges.remove(i);
-			}
-		}
+		
+		
+
+		graphTemp.removeVertex( v2 );
 		
 	}
 	
@@ -321,53 +314,82 @@ public class Engine {
 			//DEF de vertice 'conhecido': ambos possuem um vizinho em comum
 			//não são adjacentes
 			
-				
-			// recupera vértice 'conhecido' de vCurrent, faz o merge e colore
-			Iterator<Edge> vCurrentIterator = vCurrent.getAdjacentVertexes().iterator();
-			while( vCurrentIterator.hasNext()) {
-				Edge currentEdge = vCurrentIterator.next();
-				Vertex adjacent = currentEdge.getVertex(vCurrent);
-				
-				for( Edge adj : adjacent.getAdjacentVertexes()){
-					Vertex acquainted = currentEdge.getVertex(adjacent);
+			boolean continueColouring = true;
+
+			ListIterator<Edge> vCurrentIterator = vCurrent.getAdjacentVertexes().listIterator();
+			while( continueColouring){
+				vCurrentIterator = vCurrent.getAdjacentVertexes().listIterator( vCurrentIterator.nextIndex()  );
+				System.out.println("ta no " + vCurrentIterator.nextIndex());
+				if( vCurrentIterator.hasNext()){
+					Edge currentEdge = vCurrentIterator.next();
+					Vertex adjacent = currentEdge.getVertex(vCurrent);
+					System.out.print("vendo adjacentes a ");
+				    adjacent.showVertex();
 					
-					if( !acquainted.isAdjacent(vCurrent)){
-						indexV = graphTemp.findVertexIndex(acquainted);
+				    @SuppressWarnings("unchecked")
+					ArrayList<Edge> edges = (ArrayList<Edge>) adjacent.getAdjacentVertexes().clone();
+					for( Edge adj : edges){
+						Vertex acquainted = adj.getVertex(adjacent);
 						
-						if( indexV != -1 ){
-							Vertex v = graph.getVertex(indexV);
-							v.setColor("color"+color);
+						System.out.print("vendo "+ acquainted.getLabel() + " adjacentes a ");
+					    adjacent.showVertex();
+					    
+					    if( acquainted.getLabel().equals("6")){
+					    	System.out.println(acquainted.isAdjacent(vCurrent));
+					    }
+						
+						if( !acquainted.isAdjacent(vCurrent) && acquainted != vCurrent){
+							
+							System.out.println("vai colorir " + acquainted.getLabel());
+							indexV = graphTemp.findVertexIndex(acquainted);
+							
+							if( indexV != -1 ){
+								Vertex v = graph.getVertex(indexV);
+								v.setColor("color"+color);
+							}
+							System.out.print("COR " + color +" NO ");
+						    acquainted.showVertex();
+							
+							// merge vertices
+							mergeVertexes(vCurrent, acquainted);
+							adjacent = currentEdge.getVertex(vCurrent);
 						}
 						
-						// merge vertices
-						mergeVertexes(vCurrent, acquainted);
 					}
 					
+					continue;
 				}
+				
+				
+				// se não houver mais 'conhecidos', pegar vertice de maior grau
+				// que não são adjacentes a vCurrent
+				ListIterator<Vertex> copyIterator = vertexes.listIterator(itr.nextIndex());
+				while( copyIterator.hasNext()) {
+					Vertex neighbor = copyIterator.next();
+					
+					if( !neighbor.isAdjacent(vCurrent) ) {
+						
+						// se o vertice não estiver colorido, colore
+						if( neighbor.getColor() == null) {
+							indexV = graphTemp.findVertexIndex(neighbor);
+							
+							if( indexV != -1 ){
+								Vertex v = graph.getVertex(indexV);
+								v.setColor("color"+color);
+							}
+							
+							// merge vertices
+							mergeVertexes(vCurrent, neighbor);
+							break;
+						}
+					}
+				}
+				
+				continueColouring = false;
+				
 			}
 			
-			// se não houver mais 'conhecidos', pegar vertice de maior grau
-			// que não são adjacentes a vCurrent
-			ListIterator<Vertex> copyIterator = vertexes.listIterator(itr.nextIndex());
-			while( copyIterator.hasNext()) {
-				Vertex neighbor = copyIterator.next();
-				
-				if( !neighbor.isAdjacent(vCurrent) ) {
-					
-					// se o vertice não estiver colorido, colore
-					if( neighbor.getColor() == null) {
-						indexV = graphTemp.findVertexIndex(neighbor);
-						
-						if( indexV != -1 ){
-							Vertex v = graph.getVertex(indexV);
-							v.setColor("color"+color);
-						}
-						
-						// merge vertices
-						mergeVertexes(vCurrent, neighbor);
-					}
-				}
-			}
+			
 			
 			color++;
 			// remove da lista de arestas tb

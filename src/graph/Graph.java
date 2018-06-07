@@ -159,5 +159,37 @@ public class Graph implements Cloneable, Serializable {
 		return object;
 	}
 	
+	/**
+	 * Remove vertice do grafo, retirando arestas;
+	 * @param v
+	 */
+	public void removeVertex(Vertex v){
+		
+		//remove vértice dos adjacentes de todos os vertices
+		for(int i = 0; i < vertexList.size() ; i++){
+			Vertex vertex = vertexList.get(i);
+			
+			ArrayList<Edge> edges = vertex.getAdjacentVertexes();
+			
+			for( int j = 0 ; j < edges.size(); j++){
+				Edge adj = edges.get(j);
+				if( adj.getVertex(v) != null ){
+					edges.remove(j);
+				}
+			}
+		}
+		
+		//
+		for( int i=0; i<edgeList.size(); i++ ){
+			
+			if( edgeList.get(i).getVertex(v) != null ){
+				edgeList.remove(i);
+			}
+		}
+		
+
+		vertexList.remove( v );
+	}
+	
 	
 }
