@@ -9,12 +9,12 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 
 	private String label; 
 	private String color;
-	private ArrayList<Edge> adjacent; // lista de adjacencia do vertice
+	private ArrayList<Edge> adjacents; // lista de adjacencia do vertice
 	
 	// construtor da classe
 	public Vertex( String label ){
 		this.label = label;
-		this.adjacent = new ArrayList<Edge>();
+		this.adjacents = new ArrayList<Edge>();
 		this.color = null;
 	}
 
@@ -23,7 +23,7 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 	 * @param e Aresta a ser adicionada
 	 */
 	public void addAdjacent( Edge e ) {
-		adjacent.add(e);
+		adjacents.add(e);
 	}
 	
 	/**
@@ -45,11 +45,11 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 	 * @return grau do vertice
 	 */
 	public int getDegree( ){
-		return adjacent.size();
+		return adjacents.size();
 	}
 	
 	public ArrayList<Edge> getAdjacentVertexes(){
-		return adjacent;
+		return adjacents;
 	}
 
 	public String getColor() {
@@ -62,7 +62,7 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 	
 	@Override
     public int compareTo(Vertex v2) {
-        if (this.getDegree() >= v2.getDegree()) {
+        if (this.getDegree() > v2.getDegree()) {
             return -1;
         }
         if (this.getDegree() < v2.getDegree()) {
@@ -81,8 +81,20 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
         return this.getLabel().equals(other.getLabel());
     }
 
-	
-
+	/**
+	 * Checa se vértices são adjacentes
+	 * @param v
+	 * @return
+	 */
+	public boolean isAdjacent(Vertex v) {
+		for( Edge edge : adjacents) {
+			if( edge.getVertex( this ) == v) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 	
 	
 }

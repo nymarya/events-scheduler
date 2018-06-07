@@ -208,7 +208,7 @@ public class Engine {
 	 * Ordena uma lista de vertices em ordem decrescente do grau
 	 * @param list Lista de vertices
 	 */
-	private static void orderByWeight(ArrayList<Vertex> list) {
+	public static void orderByWeight(ArrayList<Vertex> list) {
         Collections.sort(list, new Comparator<Vertex>() {
 
 			@Override
@@ -223,59 +223,43 @@ public class Engine {
 	 * Une dois vertices
 	 * @param ArrayList<Vertex> vertexes Copia da lista de vertices do grafo
 	 * @param v1 Vertice 1
-	 * @param v2 Vertice 2
+	 * @param v2 Vertice 2 que será unido com v1
 	 */
 	public void mergeVertexes( Vertex v1, Vertex v2 ){
 		
 		
-		ArrayList<Edge> adjV1 = v1.getAdjacentVertexes();
-		ArrayList<Edge> adjV2 = v2.getAdjacentVertexes();
+		ArrayList<Edge> adjacentsV1 = v1.getAdjacentVertexes();
+		ArrayList<Edge> adjacentsV2 = v2.getAdjacentVertexes();
 		
-		int dif = 0;
-
-		
-		/*System.out.println("===================");
-		for( int i=0; i<adjV1.size(); i++ ){
-			adjV1.get(i).getVertex(v1).showVertex();
-		}
-		System.out.println("===================");
-		for( int i=0; i<adjV2.size(); i++ ){
-			adjV2.get(i).getVertex(v2).showVertex();
-		}
-		System.out.println("===================");*/
 
 		// percorre lista de adjacencia de v2
-		for( int i=0; i<adjV2.size(); i++ ){
+		for (Edge adjacentV2 : adjacentsV2) {
+			//recupera o vertice vizinho a v2 pela aresta atual
+			Vertex vAdV2 = adjacentV2.getVertex(v2);
 			
-			Vertex vAdV2 = adjV2.get(i).getVertex(v2);
-
-			for( int j=0; j<adjV1.size(); j++ ){
-				
-				Vertex vAdV1 = adjV1.get(j).getVertex(v1);
-				
+			//checa de vAdV2 e v1
+			boolean isAdjacent = false;
+			for( Edge adjacentV1: adjacentsV1) {
+				//recupera o vizinho de v1
+				Vertex vAdV1 = adjacentV1.getVertex(v1);
 				if( vAdV1 == vAdV2 ){
-					break;
-				} else {
-					dif++;
-				}
+					isAdjacent = true;
+				} 
 			}
 			
-			
-			if( dif == adjV1.size() ){
-				
-				//System.out.print("ADICIONAAA: ");
-				//adjV2.get(i).getVertex(v2).showVertex();
-
-				// cria aresta e adiciona o vertice lá
-				Edge edge = new Edge( v1, adjV2.get(i).getVertex(v2) );
+			//se o vAdV2 não for vizinho de v1, adiciona a aresta entre v1 e vAdV2
+			if (!isAdjacent) {
+				Edge edge = new Edge( v1, vAdV2 );
 				graphTemp.addEdge(edge);
-				// adiciona na lista de adjacencia de v1
-				adjV1.add(edge);
 				
+				// atualiza lista de adjacencia de v1
+				adjacentsV1.add(edge);
 			}
 			
 		}
 
+		// TODO: implementar metodo q remove vertice com essa logica abaixo
+		
 		// remove da lista de vertices
 		// System.out.print("REMOVEEE: ");
 		// v2.showVertex();
@@ -288,7 +272,6 @@ public class Engine {
 				edges.remove(i);
 			}
 		}
-		//graphTemp.showVextexList();
 		
 	}
 	
@@ -422,6 +405,23 @@ public class Engine {
 		
 		
 		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Graph getGraph() {
+		return this.graphTemp;
+	}
+	
+	/**
+	 * 
+	 * @param graph
+	 */
+	public void setGraph (Graph graph) {
+		this.graphTemp = graph;
+		vertexes = graphTemp.getVertexes();
 	}
 	
 }
