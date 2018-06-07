@@ -137,33 +137,20 @@ public class BurkeTest {
 		v10 = engine.getGraphTemp().getVertex(9);
 		v11 = engine.getGraphTemp().getVertex(10);
 		v12 = engine.getGraphTemp().getVertex(11);
-	
-		
+				
 		
 		engine.mergeVertexes(v5, v3);
 		
 		assertTrue(v5.isAdjacent(v7));
-		ArrayList<Edge> edges = engine.getGraphTemp().getEdges();
+		assertTrue(v7.isAdjacent(v5));
+		//ArrayList<Edge> edges = engine.getGraphTemp().getEdges();
 		
 		
+		//engine.mergeVertexes(v5, v10);
+		
+		//engine.mergeVertexes(v5, v7);
 		
 		
-		engine.mergeVertexes(v5, v7);
-		
-		assertTrue(v5.isAdjacent(v10));
-		assertTrue(v5.isAdjacent(v12));
-		assertTrue(v5.isAdjacent(v11));
-		
-		int i = 5;
-		while( i-- > 0){
-			System.out.println("b " + i);
-			for( int j = 0; j < 4; j++){
-				System.out.println("a");
-				if ( j == 1){
-					break;
-				}
-			}
-		}
 		
 		//Teste coloração
 		engine.setGraph(graph);

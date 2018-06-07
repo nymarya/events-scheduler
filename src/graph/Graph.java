@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import graph.Edge;
 import graph.Vertex;
@@ -165,25 +166,28 @@ public class Graph implements Cloneable, Serializable {
 	 */
 	public void removeVertex(Vertex v){
 		
+		
 		//remove vértice dos adjacentes de todos os vertices
 		for(int i = 0; i < vertexList.size() ; i++){
 			Vertex vertex = vertexList.get(i);
 			
-			ArrayList<Edge> edges = vertex.getAdjacentVertexes();
-			
-			for( int j = 0 ; j < edges.size(); j++){
-				Edge adj = edges.get(j);
+			Iterator<Edge> edges = vertex.getAdjacentVertexes().iterator();
+			while( edges.hasNext()) {
+				Edge adj = edges.next();
+
 				if( adj.getVertex(v) != null ){
-					edges.remove(j);
+					edges.remove();
 				}
 			}
 		}
 		
-		//
-		for( int i=0; i<edgeList.size(); i++ ){
-			
-			if( edgeList.get(i).getVertex(v) != null ){
-				edgeList.remove(i);
+		//remove da lista de arestas
+		Iterator<Edge> edges = edgeList.iterator();
+		while( edges.hasNext()) {
+			Edge adj = edges.next();
+
+			if( adj.getVertex(v) != null ){
+				edges.remove();
 			}
 		}
 		

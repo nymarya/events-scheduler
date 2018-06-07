@@ -255,17 +255,15 @@ public class Engine {
 				
 				// atualiza lista de adjacencia de v1
 				adjacentsV1.add(edge);
+				vAdV2.addAdjacent(edge);
 			}
 			
 		}
 
-		// TODO: implementar metodo q remove vertice com essa logica abaixo
 		
-		// remove da lista de vertices
-		
-		
-
+		// remove da lista de vertices		
 		graphTemp.removeVertex( v2 );
+		//graphTemp.showEdgeList();
 		
 	}
 	
@@ -288,15 +286,16 @@ public class Engine {
 		int color = 1;
 		
 		// percorre lista de vertices
-		ArrayList<Vertex> vertexesClone = (ArrayList<Vertex>) vertexes.clone();
-		ListIterator<Vertex> itr = vertexes.listIterator();
-		int index = 0;
-		int cont = vertexes.size();
-		while( index < cont){
+		int nonAdjIndex = 0;
+		int size = vertexes.size();
+		while( size > 1){
 			
 			// escolhe vertice de maior grau
 			//Vertex vCurrent = itr.next();
-			Vertex vCurrent = vertexes.get(index);
+			Vertex vCurrent = vertexes.get(0);
+			nonAdjIndex = 0;
+			System.out.println("vCurrent é " + vCurrent.getLabel());
+			
 			
 			// colorir no grafo original
 			int indexV = graphTemp.findVertexIndex(vCurrent);
@@ -320,12 +319,12 @@ public class Engine {
 			
 			boolean continueColouring = true;
 
-			ListIterator<Edge> vCurrentIterator = vCurrent.getAdjacentVertexes().listIterator();
+			ListIterator<Edge> vCurrentItr = vCurrent.getAdjacentVertexes().listIterator();
 			while( continueColouring){
-				vCurrentIterator = vCurrent.getAdjacentVertexes().listIterator( vCurrentIterator.nextIndex()  );
+				vCurrentItr = vCurrent.getAdjacentVertexes().listIterator( vCurrentItr.nextIndex()  );
 				//System.out.println("ta no " + vCurrentIterator.nextIndex());
-				if( vCurrentIterator.hasNext()){
-					Edge currentEdge = vCurrentIterator.next();
+				if( vCurrentItr.hasNext()){
+					Edge currentEdge = vCurrentItr.next();
 					Vertex adjacent = currentEdge.getVertex(vCurrent);
 					//System.out.print("vendo adjacentes a ");
 				    //adjacent.showVertex();
@@ -335,12 +334,6 @@ public class Engine {
 					for( Edge adj : edges){
 						Vertex acquainted = adj.getVertex(adjacent);
 						
-						//System.out.print("vendo "+ acquainted.getLabel() + " adjacentes a ");
-					    //adjacent.showVertex();
-					    
-					    //if( acquainted.getLabel().equals("6")){
-					    //	System.out.println(acquainted.isAdjacent(vCurrent));
-					    //}
 						
 						if( !acquainted.isAdjacent(vCurrent) && acquainted != vCurrent){
 							
@@ -356,7 +349,7 @@ public class Engine {
 							
 							// merge vertices
 							mergeVertexes(vCurrent, acquainted);
-							cont--;
+							size--;
 							adjacent = currentEdge.getVertex(vCurrent);
 						}
 						
@@ -368,14 +361,10 @@ public class Engine {
 				
 				// se não houver mais 'conhecidos', pegar vertice de maior grau
 				// que não são adjacentes a vCurrent
-				ListIterator<Vertex> copyIterator = vertexes.listIterator(itr.nextIndex());
-				//while( copyIterator.hasNext()) {
-				for( int k = index+1; k < cont; k++){
-					System.out.println("aa");
-					Vertex neighbor = vertexes.get(k);
-					System.out.println("ta no " + neighbor.getLabel());
+				while ( nonAdjIndex < size) {
+					Vertex neighbor = vertexes.get(nonAdjIndex);
 					
-					if( !neighbor.isAdjacent(vCurrent) ) {
+					if( !vCurrent.isAdjacent(neighbor) && neighbor != vCurrent ) {
 						
 						// se o vertice não estiver colorido, colore
 						if( neighbor.getColor() == null) {
@@ -390,25 +379,33 @@ public class Engine {
 							
 							// merge vertices
 							mergeVertexes(vCurrent, neighbor);
-							cont--;
-							break;
+							size--;
 						}
+					}else{
+						nonAdjIndex++;
+						continue;
 					}
-				}
-				
+					
+					
+				} 
+					
 				continueColouring = false;
+				
 				
 			}
 			
 			
 			
 			color++;
-			
 			graphTemp.removeVertex(vCurrent);
-			index++;
+			size--;
+			orderByDegree(vertexes);
 		}
 		
-		
+		// Trata caso de sobrar um vertice
+		if( vertexes.get(size).getColor() == null) {
+			vertexes.get(size).setColor("color"+color);
+		}
 		
 	}
 	
