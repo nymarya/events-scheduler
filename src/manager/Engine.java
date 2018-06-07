@@ -213,7 +213,6 @@ public class Engine {
 	public static void orderByDegree(ArrayList<Vertex> list) {
         Collections.sort(list, new Comparator<Vertex>() {
 
-			@Override
 			public int compare(Vertex v1, Vertex v2) {
                 return v1.compareTo(v2);
 			}
@@ -326,23 +325,24 @@ public class Engine {
 			// recupera vértice 'conhecido' de vCurrent, faz o merge e colore
 			Iterator<Edge> vCurrentIterator = vCurrent.getAdjacentVertexes().iterator();
 			while( vCurrentIterator.hasNext()) {
-				vCurrentIterator = vCurrent.getAdjacentVertexes().iterator();
 				Edge currentEdge = vCurrentIterator.next();
-				Vertex known = currentEdge.getVertex(vCurrent);
+				Vertex adjacent = currentEdge.getVertex(vCurrent);
 				
-				// se o vertice não estiver colorido, colore
-				if( known.getColor() == null) {
-					indexV = graphTemp.findVertexIndex(known);
+				for( Edge adj : adjacent.getAdjacentVertexes()){
+					Vertex acquainted = currentEdge.getVertex(adjacent);
 					
-					if( indexV != -1 ){
-						Vertex v = graph.getVertex(indexV);
-						v.setColor("color"+color);
+					if( !acquainted.isAdjacent(vCurrent)){
+						indexV = graphTemp.findVertexIndex(acquainted);
+						
+						if( indexV != -1 ){
+							Vertex v = graph.getVertex(indexV);
+							v.setColor("color"+color);
+						}
+						
+						// merge vertices
+						mergeVertexes(vCurrent, acquainted);
 					}
 					
-					// merge vertices
-					mergeVertexes(vCurrent, known);
-					
-				
 				}
 			}
 			

@@ -60,8 +60,7 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 		this.color = color;
 	}
 	
-	@Override
-    public int compareTo(Vertex v2) {
+	public int compareTo(Vertex v2) {
         if (this.getDegree() > v2.getDegree()) {
             return -1;
         }
