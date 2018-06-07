@@ -169,7 +169,6 @@ public class BurkeTest {
 		engine.setGraph(graph);
 		engine.generateColouringGraph();
 		
-		graph.showVextexList();
 		
 		
 		
