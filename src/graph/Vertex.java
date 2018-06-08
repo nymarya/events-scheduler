@@ -96,4 +96,7 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 	}
 	
 	
+
+	
+	
 }
