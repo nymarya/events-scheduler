@@ -149,6 +149,7 @@ public class BurkeTest {
 		//Teste coloração
 		engine.setGraph(graph);
 		engine.generateColouringGraph();
+		assertEquals(4, engine.getGraph().getChromaticNumber() );
 		
 		v1 = new Vertex("1"); 
 		v2 = new Vertex("2"); 
@@ -261,6 +262,24 @@ public class BurkeTest {
 		
 		engine.setGraph(graph);
 		engine.generateColouringGraph();
+		assertEquals(4, engine.getGraph().getChromaticNumber() );
+		
+		System.out.println("OUTRA COLORAÇÂO");
+		graph = engine.generate(6, 1);
+		for ( Vertex v : graph.getVertexes()) {
+			assertEquals(5, v.getDegree() );
+		}
+		engine.setGraph(graph);
+		engine.generateColouringGraph();
+		assertEquals(6, engine.getGraph().getChromaticNumber() );
+		
+		graph = engine.generate(20, 1);
+		for ( Vertex v : graph.getVertexes()) {
+			assertEquals(19, v.getDegree() );
+		}
+		engine.setGraph(graph);
+		engine.generateColouringGraph();
+		assertEquals(20, engine.getGraph().getChromaticNumber() );
 		
 		
 	}
