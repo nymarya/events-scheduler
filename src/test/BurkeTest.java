@@ -143,12 +143,6 @@ public class BurkeTest {
 		
 		assertTrue(v5.isAdjacent(v7));
 		assertTrue(v7.isAdjacent(v5));
-		//ArrayList<Edge> edges = engine.getGraphTemp().getEdges();
-		
-		
-		//engine.mergeVertexes(v5, v10);
-		
-		//engine.mergeVertexes(v5, v7);
 		
 		
 		
@@ -156,7 +150,117 @@ public class BurkeTest {
 		engine.setGraph(graph);
 		engine.generateColouringGraph();
 		
+		v1 = new Vertex("1"); 
+		v2 = new Vertex("2"); 
+		v3 = new Vertex("3"); 
+		v4 = new Vertex("4"); 
+		v5 = new Vertex("5"); 
+		v6 = new Vertex("6"); 
+		v7 = new Vertex("7"); 
+		v8 = new Vertex("8"); 
+		v9 = new Vertex("9"); 
+		v10 = new Vertex("10"); 
 		
+		
+		e1 = new Edge(v1, v2);
+		v1.addAdjacent(e1);
+		v2.addAdjacent(e1);
+		
+		e2 = new Edge(v2, v3);
+		v2.addAdjacent(e2);
+		v3.addAdjacent(e2);
+		
+		e3 = new Edge(v2, v4);
+		v2.addAdjacent(e3);
+		v4.addAdjacent(e3);
+		
+		e4 = new Edge(v2, v5);
+		v2.addAdjacent(e4);
+		v5.addAdjacent(e4);
+		
+		e5 = new Edge(v2, v7);
+		v2.addAdjacent(e5);
+		v7.addAdjacent(e5);
+		
+		e6 = new Edge(v2, v9);
+		v2.addAdjacent(e6);
+		v9.addAdjacent(e6);
+		
+		e7 = new Edge(v3, v5);
+		v3.addAdjacent(e7);
+		v5.addAdjacent(e7);
+		
+		e8 = new Edge(v4, v5);
+		v4.addAdjacent(e8);
+		v5.addAdjacent(e8);
+		
+		e9 = new Edge(v5, v6);
+		v5.addAdjacent(e9);
+		v6.addAdjacent(e9);
+		
+		e10 = new Edge(v5, v7);
+		v5.addAdjacent(e10);
+		v7.addAdjacent(e10);
+		
+		e11 = new Edge(v5, v8);
+		v5.addAdjacent(e11);
+		v8.addAdjacent(e11);
+		
+		e12 = new Edge(v7, v9);
+		v7.addAdjacent(e12);
+		v9.addAdjacent(e12);
+		
+		e13 = new Edge(v7, v10);
+		v7.addAdjacent(e13);
+		v10.addAdjacent(e13);
+		
+		e14 = new Edge(v8, v9);
+		v8.addAdjacent(e14);
+		v9.addAdjacent(e14);
+		
+		e15 = new Edge(v8, v10);
+		v8.addAdjacent(e15);
+		v10.addAdjacent(e15);
+		
+		e16 = new Edge(v9, v10);
+		v9.addAdjacent(e16);
+		v10.addAdjacent(e16);
+		System.out.println("OUTRO TESTe");
+		
+		graph = new Graph();
+		
+		graph.addVertex(v1);
+		graph.addVertex(v2);
+		graph.addVertex(v3);
+		graph.addVertex(v4);
+		graph.addVertex(v5);
+		graph.addVertex(v6);
+		graph.addVertex(v7);
+		graph.addVertex(v8);
+		graph.addVertex(v9);
+		graph.addVertex(v10);
+		graph.addEdge(e1);
+		graph.addEdge(e2);
+		graph.addEdge(e3);
+		graph.addEdge(e4);
+		graph.addEdge(e5);
+		graph.addEdge(e6);
+		graph.addEdge(e7);
+		graph.addEdge(e8);
+		graph.addEdge(e9);
+		graph.addEdge(e10);
+		graph.addEdge(e11);
+		graph.addEdge(e12);
+		graph.addEdge(e13);
+		graph.addEdge(e14);
+		graph.addEdge(e15);
+		graph.addEdge(e16);
+		
+		//assertTrue(!v3.isAdjacent(v5));
+		
+		
+		engine.setGraph(graph);
+		engine.generateColouringGraph();
 		
 		
 	}

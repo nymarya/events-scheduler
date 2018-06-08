@@ -288,7 +288,7 @@ public class Engine {
 		// percorre lista de vertices
 		int nonAdjIndex = 0;
 		int size = vertexes.size();
-		while( size > 1){
+		while( size > 2){
 			
 			// escolhe vertice de maior grau
 			//Vertex vCurrent = itr.next();
@@ -334,7 +334,7 @@ public class Engine {
 					for( Edge adj : edges){
 						Vertex acquainted = adj.getVertex(adjacent);
 						
-						
+						//System.out.println("a " + acquainted.getLabel());
 						if( !acquainted.isAdjacent(vCurrent) && acquainted != vCurrent){
 							
 							//System.out.println("vai colorir " + acquainted.getLabel());
@@ -403,8 +403,10 @@ public class Engine {
 		}
 		
 		// Trata caso de sobrar um vertice
-		if( vertexes.get(size).getColor() == null) {
-			vertexes.get(size).setColor("color"+color);
+		if( vertexes.size() == 1 && vertexes.get(0).getColor() == null) {
+			vertexes.get(0).setColor("color"+color);
+			System.out.print("COR " + color +" NO ");
+			vertexes.get(0).showVertex();
 		}
 		
 	}
