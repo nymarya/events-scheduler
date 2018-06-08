@@ -18,7 +18,7 @@ public class Graph implements Cloneable, Serializable {
 
 	private ArrayList<Vertex> vertexList;
 	private ArrayList<Edge> edgeList;
-	int chromaticNumber;
+	private int chromaticNumber;
 	
 	/**
 	 * @return the chromaticNumber
@@ -236,5 +236,15 @@ public class Graph implements Cloneable, Serializable {
 		edgeList.remove( e );
 		
 	}
+	
+	
+	public void reset( ){
+		
+		for( int i=0; i<vertexList.size(); i++ ){
+			vertexList.get(i).setColor(null);
+		}
+		
+	}
+	
 	
 }

@@ -41,7 +41,7 @@ public class Engine {
 		
 		
 	    try {
-	    	FileReader arq = new FileReader(absolutePath+"/src/data/teste4.txt");
+	    	FileReader arq = new FileReader(absolutePath+"/src/data/teste1.txt");
 	    	BufferedReader lerArq = new BufferedReader(arq);
 	    	
 	    	String linha = lerArq.readLine(); // lê a primeira linha
@@ -302,9 +302,7 @@ public class Engine {
 
 		int count=0;
 		
-
-		
-		while( n != graph.getChromaticNumber()-1 ){
+		while( n != graph.getChromaticNumber() ){
 			
 			
 			System.out.println(count+" ITERAÇÃO: ");
@@ -313,8 +311,14 @@ public class Engine {
 			// retira a aresta de menor peso do grafo
 			graph.removeEdge( edges.get(0) );
 
+			graph.reset();
+
+			
 			// colore grafo novamente
 			generateColouringGraph( );
+			
+			
+			
 			
 		}
 		
@@ -446,10 +450,6 @@ public class Engine {
 							// merge vertices
 							mergeVertexes(vCurrent, neighbor);
 							size--;
-						} else {
-							
-							size--;
-							
 						}
 						
 						
