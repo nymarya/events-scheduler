@@ -288,7 +288,7 @@ public class Engine {
 		// percorre lista de vertices
 		int nonAdjIndex = 0;
 		int size = vertexes.size();
-		while( size > 2){
+		while( size >= 2){
 			
 			// escolhe vertice de maior grau
 			//Vertex vCurrent = itr.next();

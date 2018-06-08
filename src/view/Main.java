@@ -17,6 +17,7 @@ public class Main {
 			    
 		Engine engine = new Engine();
 		engine.createGraph();
+		System.out.println("\n\n COLORACAO\n\n");
 		engine.generateColouringGraph();
 
 	}
