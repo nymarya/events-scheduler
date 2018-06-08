@@ -1,15 +1,23 @@
 package graph;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import graph.Edge;
 import graph.Vertex;
 
 //classe de representação de um grafo
-public class Graph {
+public class Graph implements Cloneable, Serializable {
 
-	ArrayList<Vertex> vertexList;
-	ArrayList<Edge> edgeList;
+	private ArrayList<Vertex> vertexList;
+	private ArrayList<Edge> edgeList;
 	
 	
 	// construtor - inicializa listas
@@ -105,12 +113,87 @@ public class Graph {
 				return vertexList.get(i);
 			}
 		}
-		return null;
+		return null; 
 		
 	}
 
-
+	/**
+	 * Encontra indice de vertice v na lista de vertices
+	 * @param v Vertice
+	 * @return Indice do vertice na lista
+	 */
+	public int findVertexIndex( Vertex v ){
+		
+		return vertexList.indexOf(v);
+		
+	}
 	
+	
+	
+	@Override
+	public Graph clone()
+	{
+		Graph object = null;
+		try {
+			FileOutputStream fileOutputStream = new FileOutputStream("object.dat");
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+			objectOutputStream.writeObject(this);
+			fileOutputStream.flush();
+			fileOutputStream.close();
+			objectOutputStream.flush();
+			objectOutputStream.close();
+			FileInputStream fileInputStream = new FileInputStream("object.dat");
+			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+			object = (Graph) objectInputStream.readObject();
+	                fileInputStream.close();
+			objectInputStream.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return object;
+	}
+	
+	/**
+	 * Remove vertice do grafo, retirando arestas;
+	 * @param v
+	 */
+	public void removeVertex(Vertex v){
+		
+		
+		//remove vértice dos adjacentes de todos os vertices
+		for(int i = 0; i < vertexList.size() ; i++){
+			Vertex vertex = vertexList.get(i);
+			
+			Iterator<Edge> edges = vertex.getAdjacentVertexes().iterator();
+			while( edges.hasNext()) {
+				Edge adj = edges.next();
+
+				if( adj.getVertex(v) != null ){
+					edges.remove();
+				}
+			}
+		}
+		
+		//remove da lista de arestas
+		Iterator<Edge> edges = edgeList.iterator();
+		while( edges.hasNext()) {
+			Edge adj = edges.next();
+
+			if( adj.getVertex(v) != null ){
+				edges.remove();
+			}
+		}
+		
+
+		vertexList.remove( v );
+	}
 	
 	
 }
