@@ -18,8 +18,22 @@ public class Graph implements Cloneable, Serializable {
 
 	private ArrayList<Vertex> vertexList;
 	private ArrayList<Edge> edgeList;
+	int chromaticNumber;
 	
-	
+	/**
+	 * @return the chromaticNumber
+	 */
+	public int getChromaticNumber() {
+		return chromaticNumber;
+	}
+
+	/**
+	 * @param chromaticNumber the chromaticNumber to set
+	 */
+	public void setChromaticNumber(int chromaticNumber) {
+		this.chromaticNumber = chromaticNumber;
+	}
+
 	// construtor - inicializa listas
 	public Graph( ){
 		vertexList = new ArrayList<Vertex>();

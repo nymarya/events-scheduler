@@ -178,7 +178,7 @@ public class Engine {
 					Vertex dest = graph.getVertex(j);
 					
 					// garante a densidade do grafo
-					 if( e % 10 > count) {
+					 if( e % 10 > count || density == 1.0) {
 						 
 						 Random rand = new Random();
 
@@ -322,12 +322,9 @@ public class Engine {
 			ListIterator<Edge> vCurrentItr = vCurrent.getAdjacentVertexes().listIterator();
 			while( continueColouring){
 				vCurrentItr = vCurrent.getAdjacentVertexes().listIterator( vCurrentItr.nextIndex()  );
-				//System.out.println("ta no " + vCurrentIterator.nextIndex());
 				if( vCurrentItr.hasNext()){
 					Edge currentEdge = vCurrentItr.next();
 					Vertex adjacent = currentEdge.getVertex(vCurrent);
-					//System.out.print("vendo adjacentes a ");
-				    //adjacent.showVertex();
 					
 				    @SuppressWarnings("unchecked")
 					ArrayList<Edge> edges = (ArrayList<Edge>) adjacent.getAdjacentVertexes().clone();
@@ -408,6 +405,8 @@ public class Engine {
 			System.out.print("COR " + color +" NO ");
 			vertexes.get(0).showVertex();
 		}
+		
+		graph.setChromaticNumber(color);
 		
 	}
 	
