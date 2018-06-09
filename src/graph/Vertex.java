@@ -4,7 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
-//Classe de descrição de um vértice do grafo
+/**
+* Classe de descrição de um vértice do grafo
+*
+* @authors Jaine B. Rannow, Mayra D. Azevedo
+*/
 public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 
 	private String label; 

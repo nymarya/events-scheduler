@@ -2,47 +2,69 @@ package graph;
 
 import java.io.Serializable;
 
-//Classe de descrição de uma aresta do grafo
+
+/**
+* Classe de descrição de uma aresta do grafo
+*
+* @authors Jaine B. Rannow, Mayra D. Azevedo
+*/
+
 public class Edge implements Serializable {
 
 	private Vertex origin; // vertice na "ponta de origem" da aresta 
 	private Vertex destination; // vertice de destino da aresta
 	private int weight; // peso da aresta
 
-	
-	// Construtor da classe
-
+	/**
+	 * Constrói objeto para a classe Edge, uma aresta não-direcionada
+	 * @param origin Vértice de origem
+	 * @param destination Vértice de destino
+	 */
 	public Edge( Vertex origin, Vertex destination ){
 		this.origin = origin;
 		this.destination = destination;
 		this.weight = 1;
 	}
 	
+	/**
+	 * Constrói objeto para a classe Edge
+	 * @param origin Vértice de origem
+	 * @param destination Vértice de destino
+	 * @param weight Peso da aresta
+	 */
 	public Edge( Vertex origin, Vertex destination, int weight ) {
 		this.origin = origin;
 		this.destination = destination;
 		this.weight = weight;
 	}
 
-	
 	/**
-	 * Métodos get e set
+	 * Aumenta o peso da aresta em 1
 	 */
-	
 	public void increaseWeight( ){
 		weight++;
 	}
 	
+	/**
+	 * Recupera vértice de origem
+	 * @return Vértice da aresta
+	 */
 	public Vertex getOrigin() {
 		return origin;
 	}
 
-
+	/**
+	 * Atualiza vértice de origem
+	 * @param origin Novo vértice da aresta
+	 */
 	public void setOrigin(Vertex origin) {
 		this.origin = origin;
 	}
 
-
+	/**
+	 * Recupera vértice de destino
+	 * @return Vértice da aresta
+	 */
 	public Vertex getDestination() {
 		return destination;
 	}

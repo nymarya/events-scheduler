@@ -13,28 +13,22 @@ import java.util.Iterator;
 import graph.Edge;
 import graph.Vertex;
 
-//classe de representação de um grafo
+
+/**
+ * Classe de representação de um grafo
+ *
+ * @authors Jaine B. Rannow, Mayra D. Azevedo
+ */
 public class Graph implements Cloneable, Serializable {
 
 	private ArrayList<Vertex> vertexList;
 	private ArrayList<Edge> edgeList;
 	int chromaticNumber;
 	
+	
 	/**
-	 * @return the chromaticNumber
+	 * Constroi objeto da classe Graph
 	 */
-	public int getChromaticNumber() {
-		return chromaticNumber;
-	}
-
-	/**
-	 * @param chromaticNumber the chromaticNumber to set
-	 */
-	public void setChromaticNumber(int chromaticNumber) {
-		this.chromaticNumber = chromaticNumber;
-	}
-
-	// construtor - inicializa listas
 	public Graph( ){
 		vertexList = new ArrayList<Vertex>();
 		edgeList = new ArrayList<Edge>();
@@ -57,8 +51,8 @@ public class Graph implements Cloneable, Serializable {
 	}
 	
 	/**
-	 * Recupera vertice do grafo
-	 * @param index
+	 * Recupera vértice do grafo
+	 * @param index Índice do vértice na lsta de vértices
 	 */
 	public Vertex getVertex( int index) {
 		return vertexList.get(index);
@@ -66,15 +60,15 @@ public class Graph implements Cloneable, Serializable {
 	
 	/**
 	 * Retorna arestas do grafo
-	 * @return
+	 * @return Lista de arestas do grafo
 	 */
 	public ArrayList<Edge> getEdges( ){	
 		return edgeList;
 	}
 	
 	/**
-	 * rettorna vertices do grafo
-	 * @return
+	 * Retorna vértices do grafo
+	 * @return Lista de vértices do grafo
 	 */
 	public ArrayList<Vertex> getVertexes( ) {
 		return vertexList;
@@ -101,6 +95,22 @@ public class Graph implements Cloneable, Serializable {
 			edgeList.get(i).showEdge();
 		}
 	
+	}
+	
+	/**
+	 * Recupera número de cores do grafo
+	 * @return Número de cores do grafo
+	 */
+	public int getChromaticNumber() {
+		return chromaticNumber;
+	}
+
+	/**
+	 * Atualiza o número de cores do grafo
+	 * @param chromaticNumber O novo número de cores
+	 */
+	public void setChromaticNumber(int chromaticNumber) {
+		this.chromaticNumber = chromaticNumber;
 	}
 	
 	public Edge containsEdge( Edge e ){

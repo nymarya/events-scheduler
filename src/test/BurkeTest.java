@@ -13,6 +13,11 @@ import graph.Graph;
 import graph.Vertex;
 import manager.Engine;
 
+/**
+* Classe de testes para a coloração
+*
+* @authors Jaine B. Rannow, Mayra D. Azevedo
+*/
 public class BurkeTest {
 
 	@Test

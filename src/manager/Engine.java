@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Random;
 
@@ -16,6 +15,11 @@ import graph.Graph;
 import graph.Vertex;
 import graph.Edge;
 
+/**
+ * Classe com os métodos e atributos correspondentes a leitura de arquivos e coloração.
+ *
+ * @authors Jaine B. Rannow, Mayra D. Azevedo
+ */
 public class Engine {
 	
 	private Graph graph;
@@ -24,6 +28,9 @@ public class Engine {
 	private Graph graphTemp;
 	ArrayList<Vertex> vertexes;
 	
+	/**
+	 * Constrói objeto da classe Engine.
+	 */
 	public Engine( ){
 		activities = new ArrayList< ArrayList<String> >();
 	}
@@ -221,10 +228,9 @@ public class Engine {
     }
 	
 	/**
-	 * Une dois vertices
-	 * @param ArrayList<Vertex> vertexes Copia da lista de vertices do grafo
-	 * @param v1 Vertice 1
-	 * @param v2 Vertice 2 que será unido com v1
+	 * Une dois vértices
+	 * @param v1       Vértice 1
+	 * @param v2       Vértice 2 que será unido com v1
 	 */
 	public void mergeVertexes( Vertex v1, Vertex v2 ){
 		
@@ -263,7 +269,6 @@ public class Engine {
 		
 		// remove da lista de vertices		
 		graphTemp.removeVertex( v2 );
-		//graphTemp.showEdgeList();
 		
 	}
 	
@@ -294,7 +299,6 @@ public class Engine {
 			//Vertex vCurrent = itr.next();
 			Vertex vCurrent = vertexes.get(0);
 			nonAdjIndex = 0;
-			System.out.println("vCurrent é " + vCurrent.getLabel());
 			
 			
 			// colorir no grafo original
@@ -331,10 +335,8 @@ public class Engine {
 					for( Edge adj : edges){
 						Vertex acquainted = adj.getVertex(adjacent);
 						
-						//System.out.println("a " + acquainted.getLabel());
 						if( !acquainted.isAdjacent(vCurrent) && acquainted != vCurrent){
 							
-							//System.out.println("vai colorir " + acquainted.getLabel());
 							indexV = graphTemp.findVertexIndex(acquainted);
 							
 							if( indexV != -1 ){
@@ -346,7 +348,7 @@ public class Engine {
 							
 							// merge vertices
 							mergeVertexes(vCurrent, acquainted);
-							size--;
+
 							adjacent = currentEdge.getVertex(vCurrent);
 						}
 						
@@ -358,7 +360,7 @@ public class Engine {
 				
 				// se não houver mais 'conhecidos', pegar vertice de maior grau
 				// que não são adjacentes a vCurrent
-				while ( nonAdjIndex < size) {
+				while ( nonAdjIndex < vertexes.size()) {
 					Vertex neighbor = vertexes.get(nonAdjIndex);
 					
 					if( !vCurrent.isAdjacent(neighbor) && neighbor != vCurrent ) {
@@ -376,8 +378,8 @@ public class Engine {
 							
 							// merge vertices
 							mergeVertexes(vCurrent, neighbor);
-							size--;
 						}
+						
 					}else{
 						nonAdjIndex++;
 						continue;
@@ -395,32 +397,30 @@ public class Engine {
 			
 			color++;
 			graphTemp.removeVertex(vCurrent);
-			size--;
 			orderByDegree(vertexes);
 		}
 		
 		// Trata caso de sobrar um vertice
 		if( vertexes.size() == 1 && vertexes.get(0).getColor() == null) {
 			vertexes.get(0).setColor("color"+color);
-			System.out.print("COR " + color +" NO ");
-			vertexes.get(0).showVertex();
 		}
 		
+		// Atualiza número de cores utilizadas para colorir o grafo
 		graph.setChromaticNumber(color);
 		
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Recupera cópia do grafo
+	 * @return Grafo temporário
 	 */
 	public Graph getGraphTemp() {
 		return this.graphTemp;
 	}
 	
 	/**
-	 * 
-	 * @param graph
+	 * Atualiza grafo temporário
+	 * @param graph Grafo
 	 */
 	public void setGraphTemp (Graph graph) {
 		this.graphTemp = graph;
@@ -428,16 +428,16 @@ public class Engine {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Recupera grafo
+	 * @return Grafo
 	 */
 	public Graph getGraph() {
 		return this.graph;
 	}
 	
 	/**
-	 * 
-	 * @param graph
+	 * Atualiza grafo
+	 * @param graph Grafo
 	 */
 	public void setGraph (Graph graph) {
 		this.graph = graph;
