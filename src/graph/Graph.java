@@ -113,6 +113,11 @@ public class Graph implements Cloneable, Serializable {
 		this.chromaticNumber = chromaticNumber;
 	}
 	
+	/**
+	 * Verifica de aresta está no grafo
+	 * @param e Aresta
+	 * @return Aresta se aresta está no grafo, null caso contrário
+	 */
 	public Edge containsEdge( Edge e ){
 		
 		for( int i=0; i<edgeList.size(); i++ ){
@@ -130,6 +135,11 @@ public class Graph implements Cloneable, Serializable {
 		
 	}
 	
+	/**
+	 * Verifica se vértice está no grafo
+	 * @param v Vértice
+	 * @return Vértice se vértice está no grafo, null caso contrário
+	 */
 	public Vertex containsVertex( Vertex v ){
 		
 		for( int i=0; i<vertexList.size(); i++ ){
@@ -153,7 +163,10 @@ public class Graph implements Cloneable, Serializable {
 	}
 	
 	
-	
+	/**
+	 * Cria cópia do grafo através da serialização.
+	 * @return Cópia do grafo
+	 */
 	@Override
 	public Graph clone()
 	{
@@ -186,7 +199,7 @@ public class Graph implements Cloneable, Serializable {
 	
 	/**
 	 * Remove vertice do grafo, retirando arestas;
-	 * @param v
+	 * @param v Vértice a ser removido
 	 */
 	public void removeVertex(Vertex v){
 		
@@ -217,6 +230,51 @@ public class Graph implements Cloneable, Serializable {
 		
 
 		vertexList.remove( v );
+	}
+	
+	/**
+	 * Une dois vértices
+	 * @param v1       Vértice 1
+	 * @param v2       Vértice 2 que será unido com v1
+	 */
+	public void mergeVertexes( Vertex v1, Vertex v2 ){
+		
+		
+		ArrayList<Edge> adjacentsV1 = v1.getAdjacentVertexes();
+		ArrayList<Edge> adjacentsV2 = v2.getAdjacentVertexes();
+		
+
+		// percorre lista de adjacencia de v2
+		for (Edge adjacentV2 : adjacentsV2) {
+			//recupera o vertice vizinho a v2 pela aresta atual
+			Vertex vAdV2 = adjacentV2.getVertex(v2);
+			
+			//checa se vAdV2 e v1 são vizinhos
+			boolean isAdjacent = false;
+			for( Edge adjacentV1: adjacentsV1) {
+				//recupera o vizinho de v1
+				Vertex vAdV1 = adjacentV1.getVertex(v1);
+				if( vAdV1 == vAdV2 ){
+					isAdjacent = true;
+				} 
+			}
+			
+			//se o vAdV2 não for vizinho de v1, adiciona a aresta entre v1 e vAdV2
+			if (!isAdjacent) {
+				Edge edge = new Edge( v1, vAdV2 );
+				addEdge(edge);
+				
+				// atualiza lista de adjacencia de v1
+				adjacentsV1.add(edge);
+				vAdV2.addAdjacent(edge);
+			}
+			
+		}
+
+		
+		// remove da lista de vertices		
+		removeVertex( v2 );
+		
 	}
 	
 	

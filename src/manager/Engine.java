@@ -227,51 +227,6 @@ public class Engine {
      });
     }
 	
-	/**
-	 * Une dois vértices
-	 * @param v1       Vértice 1
-	 * @param v2       Vértice 2 que será unido com v1
-	 */
-	public void mergeVertexes( Vertex v1, Vertex v2 ){
-		
-		
-		ArrayList<Edge> adjacentsV1 = v1.getAdjacentVertexes();
-		ArrayList<Edge> adjacentsV2 = v2.getAdjacentVertexes();
-		
-
-		// percorre lista de adjacencia de v2
-		for (Edge adjacentV2 : adjacentsV2) {
-			//recupera o vertice vizinho a v2 pela aresta atual
-			Vertex vAdV2 = adjacentV2.getVertex(v2);
-			
-			//checa se vAdV2 e v1 são vizinhos
-			boolean isAdjacent = false;
-			for( Edge adjacentV1: adjacentsV1) {
-				//recupera o vizinho de v1
-				Vertex vAdV1 = adjacentV1.getVertex(v1);
-				if( vAdV1 == vAdV2 ){
-					isAdjacent = true;
-				} 
-			}
-			
-			//se o vAdV2 não for vizinho de v1, adiciona a aresta entre v1 e vAdV2
-			if (!isAdjacent) {
-				Edge edge = new Edge( v1, vAdV2 );
-				graphTemp.addEdge(edge);
-				
-				// atualiza lista de adjacencia de v1
-				adjacentsV1.add(edge);
-				vAdV2.addAdjacent(edge);
-			}
-			
-		}
-
-		
-		// remove da lista de vertices		
-		graphTemp.removeVertex( v2 );
-		
-	}
-	
 	
 	/**
 	 * Gera grafo colorido. Baseado no algoritmo de Burke 
@@ -293,7 +248,7 @@ public class Engine {
 		// percorre lista de vertices
 		int nonAdjIndex = 0;
 		int size = vertexes.size();
-		while( size >= 2){
+		while( vertexes.size() >= 2){
 			
 			// escolhe vertice de maior grau
 			//Vertex vCurrent = itr.next();
@@ -310,9 +265,6 @@ public class Engine {
 				v.setColor("color"+color);
 			}
 			
-			
-			System.out.print("COR " + color +" NO ");
-			vCurrent.showVertex();
 			
 			//Enquanto existir vertice que possua vizinho comum a vCurrent
 			// ou existir algum vértice que não é adjacente a vCurrent,
@@ -343,11 +295,9 @@ public class Engine {
 								Vertex v = graph.getVertex(indexV);
 								v.setColor("color"+color);
 							}
-							System.out.print("COR " + color +" NO ");
-						    acquainted.showVertex();
-							
+
 							// merge vertices
-							mergeVertexes(vCurrent, acquainted);
+							graphTemp.mergeVertexes(vCurrent, acquainted);
 
 							adjacent = currentEdge.getVertex(vCurrent);
 						}
@@ -373,11 +323,9 @@ public class Engine {
 								Vertex v = graph.getVertex(indexV);
 								v.setColor("color"+color);
 							}
-							System.out.print("COR " + color +" NO ");
-						    neighbor.showVertex();
 							
 							// merge vertices
-							mergeVertexes(vCurrent, neighbor);
+							graphTemp.mergeVertexes(vCurrent, neighbor);
 						}
 						
 					}else{

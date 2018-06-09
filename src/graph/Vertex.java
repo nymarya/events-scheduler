@@ -52,18 +52,36 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 		return adjacents.size();
 	}
 	
+	/**
+	 * Recupera lista de adjacência do vértice
+	 * @return Lista de arestas adjacentes
+	 */
 	public ArrayList<Edge> getAdjacentVertexes(){
 		return adjacents;
 	}
 
+	/**
+	 * Retorna cor do vértice
+	 * @return Cor do vertice
+	 */
 	public String getColor() {
 		return color;
 	}
 
+	/**
+	 * Atualiza cor do vértice
+	 * @param color Nova cor do vértice
+	 */
 	public void setColor(String color) {
 		this.color = color;
 	}
 	
+	/**
+	 * Compara graus dois vértices.
+	 * @param v2 Vértice a ser comparado.
+	 * @return 0 se os dois vértices tem mesmo grau, -1 se grau do vértice é
+	 * maior que o de v2, 1 caso contrário.
+	 */
 	public int compareTo(Vertex v2) {
         if (this.getDegree() > v2.getDegree()) {
             return -1;
@@ -74,7 +92,11 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
         return 0;
     }
 	
-	
+	/**
+	 * Verifica se dois vértices são iguais
+	 * @return Verdadeiro se os dois vértices tem etiquetas iguais, falso caso
+	 *  contrário.
+	 */
 	@Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Vertex)) {
@@ -86,8 +108,8 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 
 	/**
 	 * Checa se vértices são adjacentes
-	 * @param v
-	 * @return
+	 * @param v Vértice a ser verificado
+	 * @return Verdadeiro se v é adjacente ao vértice, falso caso contrário
 	 */
 	public boolean isAdjacent(Vertex v) {
 		for( Edge edge : adjacents) {

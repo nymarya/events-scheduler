@@ -136,19 +136,6 @@ public class BurkeTest {
 		Engine engine = new Engine();
 		engine.setGraphTemp(graph.clone());
 		
-		v5 = engine.getGraphTemp().getVertex(4);
-		v3 = engine.getGraphTemp().getVertex(2);
-		v7 = engine.getGraphTemp().getVertex(6);
-		v10 = engine.getGraphTemp().getVertex(9);
-		v11 = engine.getGraphTemp().getVertex(10);
-		v12 = engine.getGraphTemp().getVertex(11);
-				
-		
-		engine.mergeVertexes(v5, v3);
-		
-		assertTrue(v5.isAdjacent(v7));
-		assertTrue(v7.isAdjacent(v5));
-		
 		
 		
 		//Teste coloração
@@ -231,8 +218,8 @@ public class BurkeTest {
 		e16 = new Edge(v9, v10);
 		v9.addAdjacent(e16);
 		v10.addAdjacent(e16);
-		System.out.println("OUTRO TESTe");
-		
+
+		//mais um testes
 		graph = new Graph();
 		
 		graph.addVertex(v1);
@@ -269,7 +256,7 @@ public class BurkeTest {
 		engine.generateColouringGraph();
 		assertEquals(4, engine.getGraph().getChromaticNumber() );
 		
-		System.out.println("OUTRA COLORAÇÂO");
+		//mais um teste
 		graph = engine.generate(6, 1);
 		for ( Vertex v : graph.getVertexes()) {
 			assertEquals(5, v.getDegree() );
