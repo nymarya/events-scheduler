@@ -24,6 +24,8 @@ public class Engine {
 	private Graph graphTemp;
 	ArrayList<Vertex> vertexes;
 	
+	private int color;
+	
 	public Engine( ){
 		activities = new ArrayList< ArrayList<String> >();
 	}
@@ -39,7 +41,7 @@ public class Engine {
 		
 		
 	    try {
-	    	FileReader arq = new FileReader(absolutePath+"/src/data/teste4.txt");
+	    	FileReader arq = new FileReader(absolutePath+"/src/data/teste1.txt");
 	    	BufferedReader lerArq = new BufferedReader(arq);
 	    	
 	    	String linha = lerArq.readLine(); // lê a primeira linha
@@ -269,6 +271,64 @@ public class Engine {
 	
 	
 	/**
+	 * Ordena uma lista de arestas em ordem crescente de peso
+	 * @param list Lista de arestas
+	 */
+	public static void orderByWeight(ArrayList<Edge> list) {
+        Collections.sort(list, new Comparator<Edge>() {
+
+			public int compare(Edge e1, Edge e2) {
+                return e1.compareTo(e2);
+			}
+			
+     });
+    }
+	
+	
+	/**
+	 * Colore grafo com n cores 
+	 * @param n Número cromático ou número de cores que o grafo deve ser colorido
+	 */
+	public void colouringKColors( int n ){
+		
+		ArrayList<Edge> edges = graph.getEdges();
+		
+		// ordena arestas do grafo pelo peso
+		orderByWeight( edges );
+		
+		// colore grafo e verifica com quantas cores foi colorido
+		generateColouringGraph( );
+		
+
+		int count=0;
+		
+		while( n != graph.getChromaticNumber() ){
+			
+			
+			System.out.println(count+" ITERAÇÃO: ");
+			count++;
+
+			// retira a aresta de menor peso do grafo
+			graph.removeEdge( edges.get(0) );
+
+			graph.reset();
+
+			
+			// colore grafo novamente
+			generateColouringGraph( );
+			
+			
+			
+			
+		}
+		
+
+	}
+	
+	
+	
+	
+	/**
 	 * Gera grafo colorido. Baseado no algoritmo de Burke 
 	 * @link http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.6.2734&rep=rep1&type=pdf
 	 */
@@ -283,12 +343,13 @@ public class Engine {
 		orderByDegree(vertexes);
 		
 		// inicializa cor
-		int color = 1;
+		color = 1;
 		
 		// percorre lista de vertices
 		int nonAdjIndex = 0;
 		int size = vertexes.size();
 		while( size >= 2){
+			
 			
 			// escolhe vertice de maior grau
 			//Vertex vCurrent = itr.next();
@@ -321,6 +382,9 @@ public class Engine {
 
 			ListIterator<Edge> vCurrentItr = vCurrent.getAdjacentVertexes().listIterator();
 			while( continueColouring){
+				
+
+				
 				vCurrentItr = vCurrent.getAdjacentVertexes().listIterator( vCurrentItr.nextIndex()  );
 				if( vCurrentItr.hasNext()){
 					Edge currentEdge = vCurrentItr.next();
@@ -329,21 +393,25 @@ public class Engine {
 				    @SuppressWarnings("unchecked")
 					ArrayList<Edge> edges = (ArrayList<Edge>) adjacent.getAdjacentVertexes().clone();
 					for( Edge adj : edges){
+						
+						
 						Vertex acquainted = adj.getVertex(adjacent);
 						
 						//System.out.println("a " + acquainted.getLabel());
 						if( !acquainted.isAdjacent(vCurrent) && acquainted != vCurrent){
 							
+							
 							//System.out.println("vai colorir " + acquainted.getLabel());
 							indexV = graphTemp.findVertexIndex(acquainted);
 							
+
 							if( indexV != -1 ){
 								Vertex v = graph.getVertex(indexV);
 								v.setColor("color"+color);
 							}
 							System.out.print("COR " + color +" NO ");
 						    acquainted.showVertex();
-							
+
 							// merge vertices
 							mergeVertexes(vCurrent, acquainted);
 							size--;
@@ -351,20 +419,25 @@ public class Engine {
 						}
 						
 					}
-					
+
 					continue;
 				}
+				
 				
 				
 				// se não houver mais 'conhecidos', pegar vertice de maior grau
 				// que não são adjacentes a vCurrent
 				while ( nonAdjIndex < size) {
+					
 					Vertex neighbor = vertexes.get(nonAdjIndex);
 					
+					
 					if( !vCurrent.isAdjacent(neighbor) && neighbor != vCurrent ) {
+
 						
 						// se o vertice não estiver colorido, colore
 						if( neighbor.getColor() == null) {
+							
 							indexV = graphTemp.findVertexIndex(neighbor);
 							
 							if( indexV != -1 ){
@@ -378,20 +451,21 @@ public class Engine {
 							mergeVertexes(vCurrent, neighbor);
 							size--;
 						}
+						
+						
 					}else{
+						
 						nonAdjIndex++;
 						continue;
 					}
 					
 					
 				} 
-					
+
 				continueColouring = false;
 				
 				
 			}
-			
-			
 			
 			color++;
 			graphTemp.removeVertex(vCurrent);

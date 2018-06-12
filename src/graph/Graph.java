@@ -18,7 +18,7 @@ public class Graph implements Cloneable, Serializable {
 
 	private ArrayList<Vertex> vertexList;
 	private ArrayList<Edge> edgeList;
-	int chromaticNumber;
+	private int chromaticNumber;
 	
 	/**
 	 * @return the chromaticNumber
@@ -142,6 +142,8 @@ public class Graph implements Cloneable, Serializable {
 		
 	}
 	
+
+	
 	
 	
 	@Override
@@ -162,13 +164,10 @@ public class Graph implements Cloneable, Serializable {
 	                fileInputStream.close();
 			objectInputStream.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return object;
@@ -207,6 +206,44 @@ public class Graph implements Cloneable, Serializable {
 		
 
 		vertexList.remove( v );
+	}
+	
+	
+	/**
+	 * Remove aresta do grafo
+	 * @param e Aresta a ser removida
+	 */
+	public void removeEdge(Edge e){
+		
+		// remove aresta da lista de adjacencia dos vertices
+		for(int i = 0; i < vertexList.size() ; i++){
+			Vertex vertex = vertexList.get(i);
+			
+			ArrayList<Edge> edges = vertex.getAdjacentVertexes();
+			for(int j = 0; j < edges.size() ; j++){
+				
+				Edge adj = edges.get(j);
+				
+				if( adj == e ){
+					int indexV = edges.indexOf(e);
+					edges.remove(indexV);
+				}
+			}
+		}
+		
+		
+		// remove aresta da lista de arestas
+		edgeList.remove( e );
+		
+	}
+	
+	
+	public void reset( ){
+		
+		for( int i=0; i<vertexList.size(); i++ ){
+			vertexList.get(i).setColor(null);
+		}
+		
 	}
 	
 	
