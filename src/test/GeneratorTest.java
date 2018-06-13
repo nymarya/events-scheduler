@@ -12,9 +12,10 @@ import graph.Graph;
 import manager.Engine;
 
 /**
- * @author mayra
- *
- */
+* Classe de testes para a função que gera grafos
+*
+* @authors Jaine B. Rannow, Mayra D. Azevedo
+*/
 public class GeneratorTest {
 
 	@Test

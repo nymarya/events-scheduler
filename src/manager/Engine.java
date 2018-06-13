@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Random;
 
@@ -16,16 +15,23 @@ import graph.Graph;
 import graph.Vertex;
 import graph.Edge;
 
+/**
+ * Classe com os métodos e atributos correspondentes a leitura de arquivos e coloração.
+ *
+ * @authors Jaine B. Rannow, Mayra D. Azevedo
+ */
 public class Engine {
 	
 	private Graph graph;
 	private ArrayList< ArrayList <String> > activities; 
 	
 	private Graph graphTemp;
-	ArrayList<Vertex> vertexes;
-	
+	ArrayList<Vertex> vertexes;	
 	private int color;
 	
+	/**
+	 * Constrói objeto da classe Engine.
+	 */
 	public Engine( ){
 		activities = new ArrayList< ArrayList<String> >();
 	}
@@ -63,12 +69,6 @@ public class Engine {
 	    } catch (IOException e) {
 	        System.err.printf("Erro na abertura do arquivo: %s.\n",
 	        e.getMessage());
-	    }
-	 
-	    
-	    // testando se deu certo
-	    for( int i=0; i<activities.size(); i++ ){
-	    	System.out.println(activities.get(i));
 	    }
 	    
 	}
@@ -128,9 +128,6 @@ public class Engine {
 				
 			}
 		}
-				
-		graph.showVextexList();
-		//graph.showEdgeList();
 
 				
 	}
@@ -222,53 +219,6 @@ public class Engine {
      });
     }
 	
-	/**
-	 * Une dois vertices
-	 * @param ArrayList<Vertex> vertexes Copia da lista de vertices do grafo
-	 * @param v1 Vertice 1
-	 * @param v2 Vertice 2 que será unido com v1
-	 */
-	public void mergeVertexes( Vertex v1, Vertex v2 ){
-		
-		
-		ArrayList<Edge> adjacentsV1 = v1.getAdjacentVertexes();
-		ArrayList<Edge> adjacentsV2 = v2.getAdjacentVertexes();
-		
-
-		// percorre lista de adjacencia de v2
-		for (Edge adjacentV2 : adjacentsV2) {
-			//recupera o vertice vizinho a v2 pela aresta atual
-			Vertex vAdV2 = adjacentV2.getVertex(v2);
-			
-			//checa se vAdV2 e v1 são vizinhos
-			boolean isAdjacent = false;
-			for( Edge adjacentV1: adjacentsV1) {
-				//recupera o vizinho de v1
-				Vertex vAdV1 = adjacentV1.getVertex(v1);
-				if( vAdV1 == vAdV2 ){
-					isAdjacent = true;
-				} 
-			}
-			
-			//se o vAdV2 não for vizinho de v1, adiciona a aresta entre v1 e vAdV2
-			if (!isAdjacent) {
-				Edge edge = new Edge( v1, vAdV2 );
-				graphTemp.addEdge(edge);
-				
-				// atualiza lista de adjacencia de v1
-				adjacentsV1.add(edge);
-				vAdV2.addAdjacent(edge);
-			}
-			
-		}
-
-		
-		// remove da lista de vertices		
-		graphTemp.removeVertex( v2 );
-		//graphTemp.showEdgeList();
-		
-	}
-	
 	
 	/**
 	 * Ordena uma lista de arestas em ordem crescente de peso
@@ -299,14 +249,8 @@ public class Engine {
 		// colore grafo e verifica com quantas cores foi colorido
 		generateColouringGraph( );
 		
-
-		int count=0;
 		
 		while( n != graph.getChromaticNumber() ){
-			
-			
-			System.out.println(count+" ITERAÇÃO: ");
-			count++;
 
 			// retira a aresta de menor peso do grafo
 			graph.removeEdge( edges.get(0) );
@@ -348,7 +292,7 @@ public class Engine {
 		// percorre lista de vertices
 		int nonAdjIndex = 0;
 		int size = vertexes.size();
-		while( size >= 2){
+		while( vertexes.size() >= 2){
 			
 			
 			// escolhe vertice de maior grau
@@ -364,12 +308,7 @@ public class Engine {
 			if( indexV != -1 ){
 				Vertex v = graph.findVertexFromLabel( vCurrent.getLabel() );
 				v.setColor("color"+color);
-				System.out.print("cor " + color + "no ");
-				v.showVertex();
 			}
-			
-			
-			
 			
 			//Enquanto existir vertice que possua vizinho comum a vCurrent
 			// ou existir algum vértice que não é adjacente a vCurrent,
@@ -397,23 +336,19 @@ public class Engine {
 						
 						Vertex acquainted = adj.getVertex(adjacent);
 						
-						//System.out.println("a " + acquainted.getLabel());
 						if( !acquainted.isAdjacent(vCurrent) && acquainted != vCurrent){
 							
-							
-							//System.out.println("vai colorir " + acquainted.getLabel());
+
 							indexV = graphTemp.findVertexIndex(acquainted);
 
 							if( indexV != -1 ){
 								Vertex v = graph.findVertexFromLabel( acquainted.getLabel() );
 								v.setColor("color"+color);
-								System.out.print("cor " + color + "no ");
-								v.showVertex();
 							}
 
 							// merge vertices
-							mergeVertexes(vCurrent, acquainted);
-							size--;
+							graphTemp.mergeVertexes(vCurrent, acquainted);
+
 							adjacent = currentEdge.getVertex(vCurrent);
 						}
 						
@@ -426,8 +361,7 @@ public class Engine {
 				
 				// se não houver mais 'conhecidos', pegar vertice de maior grau
 				// que não são adjacentes a vCurrent
-				while ( nonAdjIndex < size) {
-					
+				while ( nonAdjIndex < vertexes.size()) {
 					Vertex neighbor = vertexes.get(nonAdjIndex);
 					
 					
@@ -442,15 +376,11 @@ public class Engine {
 							if( indexV != -1 ){
 								Vertex v = graph.findVertexFromLabel( neighbor.getLabel() );
 								v.setColor("color"+color);
-								System.out.print("cor " + color + "no ");
-								v.showVertex();
 							}
 							
 							// merge vertices
-							mergeVertexes(vCurrent, neighbor);
-							size--;
+							graphTemp.mergeVertexes(vCurrent, neighbor);
 						}
-						
 						
 					}else{
 						
@@ -468,7 +398,6 @@ public class Engine {
 			
 			color++;
 			graphTemp.removeVertex(vCurrent);
-			size--;
 			orderByDegree(vertexes);
 		}
 		
@@ -477,26 +406,26 @@ public class Engine {
 			String label = vertexes.get(0).getLabel();
 			Vertex v = graph.findVertexFromLabel(label);
 			v.setColor("color"+color);
-			v.showVertex();
 		} else {
 			color--;
 		}
 		
+		// Atualiza número de cores utilizadas para colorir o grafo
 		graph.setChromaticNumber(color);
 		
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Recupera cópia do grafo
+	 * @return Grafo temporário
 	 */
 	public Graph getGraphTemp() {
 		return this.graphTemp;
 	}
 	
 	/**
-	 * 
-	 * @param graph
+	 * Atualiza grafo temporário
+	 * @param graph Grafo
 	 */
 	public void setGraphTemp (Graph graph) {
 		this.graphTemp = graph;
@@ -504,16 +433,16 @@ public class Engine {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Recupera grafo
+	 * @return Grafo
 	 */
 	public Graph getGraph() {
 		return this.graph;
 	}
 	
 	/**
-	 * 
-	 * @param graph
+	 * Atualiza grafo
+	 * @param graph Grafo
 	 */
 	public void setGraph (Graph graph) {
 		this.graph = graph;

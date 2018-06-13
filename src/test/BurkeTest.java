@@ -13,6 +13,11 @@ import graph.Graph;
 import graph.Vertex;
 import manager.Engine;
 
+/**
+* Classe de testes para a coloração
+*
+* @authors Jaine B. Rannow, Mayra D. Azevedo
+*/
 public class BurkeTest {
 
 	@Test
@@ -131,21 +136,6 @@ public class BurkeTest {
 		Engine engine = new Engine();
 		engine.setGraphTemp(graph.clone());
 		
-		v5 = engine.getGraphTemp().getVertex(4);
-		v3 = engine.getGraphTemp().getVertex(2);
-		v7 = engine.getGraphTemp().getVertex(6);
-		v10 = engine.getGraphTemp().getVertex(9);
-		v11 = engine.getGraphTemp().getVertex(10);
-		v12 = engine.getGraphTemp().getVertex(11);
-		
-				
-		
-		engine.mergeVertexes(v5, v3);
-		
-		assertTrue(v5.isAdjacent(v7));
-		assertTrue(v7.isAdjacent(v5));
-		
-		
 		
 		//Teste coloração
 		engine.setGraph(graph);
@@ -228,8 +218,8 @@ public class BurkeTest {
 		e16 = new Edge(v9, v10);
 		v9.addAdjacent(e16);
 		v10.addAdjacent(e16);
-		System.out.println("OUTRO TESTe");
-		
+
+		//mais um testes
 		graph = new Graph();
 		
 		graph.addVertex(v1);
@@ -259,26 +249,18 @@ public class BurkeTest {
 		graph.addEdge(e15);
 		graph.addEdge(e16);
 		
-		//assertTrue(!v3.isAdjacent(v5));
-		
 		
 		engine.setGraph(graph);
 		engine.generateColouringGraph();
 		assertEquals(4, engine.getGraph().getChromaticNumber() );
 		
-		System.out.println("OUTRA COLORAÇÂO");
+		//mais um teste
 		graph = engine.generate(6, 1);
-		for ( Vertex v : graph.getVertexes()) {
-			assertEquals(5, v.getDegree() );
-		}
 		engine.setGraph(graph);
 		engine.generateColouringGraph();
 		assertEquals(6, engine.getGraph().getChromaticNumber() );
 		
 		graph = engine.generate(20, 1);
-		for ( Vertex v : graph.getVertexes()) {
-			assertEquals(19, v.getDegree() );
-		}
 		engine.setGraph(graph);
 		engine.generateColouringGraph();
 		assertEquals(20, engine.getGraph().getChromaticNumber() );
