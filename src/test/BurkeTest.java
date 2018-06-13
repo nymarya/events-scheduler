@@ -137,6 +137,7 @@ public class BurkeTest {
 		v10 = engine.getGraphTemp().getVertex(9);
 		v11 = engine.getGraphTemp().getVertex(10);
 		v12 = engine.getGraphTemp().getVertex(11);
+		
 				
 		
 		engine.mergeVertexes(v5, v3);
@@ -149,7 +150,11 @@ public class BurkeTest {
 		//Teste coloração
 		engine.setGraph(graph);
 		engine.generateColouringGraph();
+		for( Vertex v : graph.getVertexes()) {
+			System.out.println( v.getColor() + " no " + v.getLabel());
+		}
 		assertEquals(4, engine.getGraph().getChromaticNumber() );
+		engine.showTimetable();
 		
 		v1 = new Vertex("1"); 
 		v2 = new Vertex("2"); 

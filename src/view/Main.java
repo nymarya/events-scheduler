@@ -13,6 +13,7 @@ public class Main {
 		System.out.println("\n\n COLORACAO\n\n");
 		//engine.generateColouringGraph();
 		engine.colouringKColors(2);
+		engine.showTimetable();
 	}
 	
 }

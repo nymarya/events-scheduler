@@ -142,6 +142,23 @@ public class Graph implements Cloneable, Serializable {
 		
 	}
 	
+	/**
+	 * Encontra indice de vertice v na lista de vertices
+	 * @param v Vertice
+	 * @return Indice do vertice na lista
+	 */
+	public Vertex findVertexFromLabel (String label ){
+		
+		for( Vertex v : vertexList) {
+			if(v.getLabel().equals(label)) {
+				return v;
+			}
+		}
+		
+		return null;
+		
+	}
+	
 
 	
 	

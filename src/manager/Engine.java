@@ -355,7 +355,6 @@ public class Engine {
 			//Vertex vCurrent = itr.next();
 			Vertex vCurrent = vertexes.get(0);
 			nonAdjIndex = 0;
-			System.out.println("vCurrent é " + vCurrent.getLabel());
 			
 			
 			// colorir no grafo original
@@ -363,13 +362,10 @@ public class Engine {
 			
 
 			if( indexV != -1 ){
-				Vertex v = graph.getVertex(indexV);
+				Vertex v = graph.findVertexFromLabel( vCurrent.getLabel() );
 				v.setColor("color"+color);
 			}
 			
-			
-			System.out.print("COR " + color +" NO ");
-			vCurrent.showVertex();
 			
 			//Enquanto existir vertice que possua vizinho comum a vCurrent
 			// ou existir algum vértice que não é adjacente a vCurrent,
@@ -403,14 +399,11 @@ public class Engine {
 							
 							//System.out.println("vai colorir " + acquainted.getLabel());
 							indexV = graphTemp.findVertexIndex(acquainted);
-							
 
 							if( indexV != -1 ){
-								Vertex v = graph.getVertex(indexV);
+								Vertex v = graph.findVertexFromLabel( acquainted.getLabel() );
 								v.setColor("color"+color);
 							}
-							System.out.print("COR " + color +" NO ");
-						    acquainted.showVertex();
 
 							// merge vertices
 							mergeVertexes(vCurrent, acquainted);
@@ -438,14 +431,12 @@ public class Engine {
 						// se o vertice não estiver colorido, colore
 						if( neighbor.getColor() == null) {
 							
-							indexV = graphTemp.findVertexIndex(neighbor);
+							indexV = graphTemp.getVertexes().indexOf(neighbor);
 							
 							if( indexV != -1 ){
-								Vertex v = graph.getVertex(indexV);
+								Vertex v = graph.findVertexFromLabel( neighbor.getLabel() );
 								v.setColor("color"+color);
 							}
-							System.out.print("COR " + color +" NO ");
-						    neighbor.showVertex();
 							
 							// merge vertices
 							mergeVertexes(vCurrent, neighbor);
@@ -475,9 +466,12 @@ public class Engine {
 		
 		// Trata caso de sobrar um vertice
 		if( vertexes.size() == 1 && vertexes.get(0).getColor() == null) {
-			vertexes.get(0).setColor("color"+color);
-			System.out.print("COR " + color +" NO ");
-			vertexes.get(0).showVertex();
+			String label = vertexes.get(0).getLabel();
+			Vertex v = graph.findVertexFromLabel(label);
+			v.setColor("color"+color);
+			v.showVertex();
+		} else {
+			color--;
 		}
 		
 		graph.setChromaticNumber(color);
@@ -515,6 +509,22 @@ public class Engine {
 	 */
 	public void setGraph (Graph graph) {
 		this.graph = graph;
+	}
+	
+	/**
+	 * Monta tabela com distribuição de horários
+	 */
+	public void showTimetable() {
+		
+		for(int i = 1; i <= graph.getChromaticNumber(); i++) {
+			System.out.print("Horário "+ i + ": ");
+			for(Vertex v : graph.getVertexes()) {
+				if(v.getColor().equals("color"+i)) {
+					System.out.print("| " + v.getLabel());
+				}
+			}
+			System.out.println("|");
+		}
 	}
 	
 }
