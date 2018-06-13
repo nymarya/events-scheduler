@@ -13,10 +13,12 @@ public class Main {
 
 	public static void main( String [] args ) throws IOException {
 			    
-		Engine engine = new Engine();
-		engine.createGraph();
-		engine.colouringKColors(2);
-		engine.showTimetable();
+		View_interface frame = new View_interface();
+		frame.setVisible(true);
+		
+		//engine.createGraph();
+		//engine.colouringKColors(2);
+		//engine.showTimetable();
 	}
 	
 }

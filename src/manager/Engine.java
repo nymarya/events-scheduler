@@ -11,6 +11,8 @@ import java.util.Comparator;
 import java.util.ListIterator;
 import java.util.Random;
 
+import javax.swing.JTextField;
+
 import graph.Graph;
 import graph.Vertex;
 import graph.Edge;
@@ -29,12 +31,22 @@ public class Engine {
 	ArrayList<Vertex> vertexes;	
 	private int color;
 	
+	String archivePath;
+	String nHorarios;
+	
+	
 	/**
 	 * Constrói objeto da classe Engine.
 	 */
-	public Engine( ){
+	public Engine( String path, String horarios ){
 		activities = new ArrayList< ArrayList<String> >();
+		this.archivePath = path;
+		this.nHorarios = horarios;
 	}
+	
+	
+	
+	
 	
 	/**
 	 * Lê arquivo de entrada e separa as atividades
