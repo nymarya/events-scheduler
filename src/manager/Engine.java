@@ -524,15 +524,30 @@ public class Engine {
 	 */
 	public void showTimetable() {
 		
+		int palcos = 0;
+		String result = "";
 		for(int i = 1; i <= graph.getChromaticNumber(); i++) {
-			System.out.print("Horário "+ i + ": ");
+			result += "Horário "+ i + ": ";
+			int palcosN = 0;
 			for(Vertex v : graph.getVertexes()) {
 				if(v.getColor().equals("color"+i)) {
-					System.out.print("| " + v.getLabel());
+					result += String.format("%1$-10s", "| " + v.getLabel()); 
+					palcosN++;
 				}
 			}
-			System.out.println("|");
+			result += "|\n";
+			if( palcosN > palcos) {
+				palcos = palcosN;
+			}
 		}
+		
+		System.out.print("           ");
+		for(int i = 1; i <= palcos; i++) {
+			System.out.print("| Palco " + i + " ");
+		}
+		System.out.println("|");
+		System.out.println(result);
+		
 	}
 	
 }

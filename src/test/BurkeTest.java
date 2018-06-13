@@ -150,9 +150,6 @@ public class BurkeTest {
 		//Teste coloração
 		engine.setGraph(graph);
 		engine.generateColouringGraph();
-		for( Vertex v : graph.getVertexes()) {
-			System.out.println( v.getColor() + " no " + v.getLabel());
-		}
 		assertEquals(3, engine.getGraph().getChromaticNumber() );
 		engine.showTimetable();
 		
