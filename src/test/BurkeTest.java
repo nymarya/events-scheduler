@@ -153,7 +153,7 @@ public class BurkeTest {
 		for( Vertex v : graph.getVertexes()) {
 			System.out.println( v.getColor() + " no " + v.getLabel());
 		}
-		assertEquals(4, engine.getGraph().getChromaticNumber() );
+		assertEquals(3, engine.getGraph().getChromaticNumber() );
 		engine.showTimetable();
 		
 		v1 = new Vertex("1"); 

@@ -364,7 +364,11 @@ public class Engine {
 			if( indexV != -1 ){
 				Vertex v = graph.findVertexFromLabel( vCurrent.getLabel() );
 				v.setColor("color"+color);
+				System.out.print("cor " + color + "no ");
+				v.showVertex();
 			}
+			
+			
 			
 			
 			//Enquanto existir vertice que possua vizinho comum a vCurrent
@@ -403,6 +407,8 @@ public class Engine {
 							if( indexV != -1 ){
 								Vertex v = graph.findVertexFromLabel( acquainted.getLabel() );
 								v.setColor("color"+color);
+								System.out.print("cor " + color + "no ");
+								v.showVertex();
 							}
 
 							// merge vertices
@@ -436,6 +442,8 @@ public class Engine {
 							if( indexV != -1 ){
 								Vertex v = graph.findVertexFromLabel( neighbor.getLabel() );
 								v.setColor("color"+color);
+								System.out.print("cor " + color + "no ");
+								v.showVertex();
 							}
 							
 							// merge vertices
