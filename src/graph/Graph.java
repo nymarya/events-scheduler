@@ -331,5 +331,15 @@ public class Graph implements Cloneable, Serializable {
 		
 	}
 	
+	@Override
+	public String toString() {
+		String s = "";
+		for( Edge e : edgeList) {
+			s += e.toString() + "\n";
+		}
+		
+		return s;
+	}
+	
 	
 }

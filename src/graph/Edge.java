@@ -138,5 +138,13 @@ public class Edge implements Serializable {
         return 0;
     }
 	
+	@Override
+	public String toString( ){
+		String s = " ( " + origin.getLabel() + ", " + destination.getLabel() + ")";
+		s += " peso: " + weight;
+		
+		return s;
+	}
+	
 	
 }

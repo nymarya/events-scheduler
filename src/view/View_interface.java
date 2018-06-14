@@ -17,6 +17,11 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -145,6 +150,24 @@ public class View_interface extends JFrame {
 					engine.setGraph(graph);
 					engine.colouringKColors(nColors);
 					engine.showTimetable();
+					PrintWriter writer;
+					try {
+						FileWriter f  = new FileWriter(absolutePath + "/results/the-file-name.txt");
+						writer = new PrintWriter(f);
+						writer.println(engine.getGraph().toString());
+						writer.println(engine.getTimetable());
+						writer.close();
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (UnsupportedEncodingException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
 				}
 				
 			}

@@ -539,4 +539,29 @@ public class Engine {
 		
 	}
 	
+	public String getTimetable() {
+		int palcos = 0;
+		String result = "";
+		for(int i = 1; i <= graph.getChromaticNumber(); i++) {
+			result += "Horário "+ i + ": ";
+			int palcosN = 0;
+			for(Vertex v : graph.getVertexes()) {
+				if(v.getColor().equals("color"+i)) {
+					result += String.format("%1$-15s", "| " + v.getLabel()); 
+					palcosN++;
+				}
+			}
+			result += "|\n";
+			if( palcosN > palcos) {
+				palcos = palcosN;
+			}
+		}
+		String timetable = "           ";
+		for(int i = 1; i <= palcos; i++) {
+			timetable +=  String.format("%1$-15s", "| Palco " + i + " ");
+		}
+		timetable += "|\n" + result + "\n";
+		return timetable;
+	}
+	
 }
