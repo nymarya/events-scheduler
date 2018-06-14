@@ -2,7 +2,6 @@ package view;
 
 import java.io.IOException;
 
-import manager.Engine;
 
 /**
 * Classe principal
@@ -15,12 +14,6 @@ public class Main {
 			    
 		View_interface frame = new View_interface();
 		frame.setVisible(true);
-		
-		Engine engine = new Engine();
-		engine.readArchive(5);
-		engine.createGraph();
-		engine.colouringKColors(2);
-		engine.showTimetable();
 	}
 	
 }
