@@ -152,7 +152,7 @@ public class View_interface extends JFrame {
 					engine.showTimetable();
 					PrintWriter writer;
 					try {
-						FileWriter f  = new FileWriter(absolutePath + "/results/the-file-name.txt");
+						FileWriter f  = new FileWriter(absolutePath + "/results/result.txt");
 						writer = new PrintWriter(f);
 						writer.println(engine.getGraph().toString());
 						writer.println(engine.getTimetable());
