@@ -134,13 +134,10 @@ public class View_interface extends JFrame {
 				String casoTesteIndex = textField.getText();
 				int ctIndex = Integer.parseInt(casoTesteIndex);
 				int nColors = Integer.parseInt(nHorarios);
-				System.out.println(ctIndex);
 				
 				if( ctIndex !=  0) {
 					engine.readArchive(ctIndex);
-					System.out.println("leu");
 					engine.createGraph();
-					System.out.println("cirou");
 					engine.colouringKColors(nColors);
 					engine.showTimetable();
 				} else {
