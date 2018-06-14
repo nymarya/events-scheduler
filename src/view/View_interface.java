@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import graph.Graph;
 import manager.Engine;
 
 import java.awt.GridLayout;
@@ -31,7 +32,8 @@ public class View_interface extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
-
+	private JTextField textFieldGerador;
+	
 	private JTextField txtArchive;
 
 	/**
@@ -62,55 +64,58 @@ public class View_interface extends JFrame {
 		gbc_panel_1.gridy = 0;
 		contentPane.add(panel_1, gbc_panel_1);
 		
-		JLabel lblSelecioneUmArquivo = new JLabel("Selecione um arquivo para teste");
+		File f= new File("");
+		String absolutePath = f.getAbsolutePath();
+		
+		File folder = new File(absolutePath + "/src/data");
+		File[] listOfFiles = folder.listFiles();
+		
+		JLabel lblSelecioneUmArquivo = new JLabel("Escolha entre um número de 0 a " + listOfFiles.length);
 		lblSelecioneUmArquivo.setForeground(UIManager.getColor("Button.light"));
 		lblSelecioneUmArquivo.setFont(new Font("Lato Light", Font.BOLD, 14));
-		lblSelecioneUmArquivo.setBounds(101, 57, 246, 15);
+		lblSelecioneUmArquivo.setBounds(101, 47, 260, 15);
 		panel_1.add(lblSelecioneUmArquivo);
+		
+		JLabel lblRand = new JLabel("0: grafo gerado randômicamente");
+		lblRand.setForeground(UIManager.getColor("Button.light"));
+		lblRand.setFont(new Font("Lato Light", Font.BOLD, 14));
+		lblRand.setBounds(101, 62, 260, 15);
+		panel_1.add(lblRand);
+		
+		JLabel lblCasos = new JLabel("1 a 30: casos de testes");
+		lblCasos.setForeground(UIManager.getColor("Button.light"));
+		lblCasos.setFont(new Font("Lato Light", Font.BOLD, 14));
+		lblCasos.setBounds(101, 77, 260, 15);
+		panel_1.add(lblCasos);
 		
 		textField = new JTextField();
 		textField.setBackground(Color.WHITE);
-		textField.setEditable(false);
-		textField.setBounds(70, 83, 174, 28);
+		textField.setBounds(80, 95, 260, 28);
 		panel_1.add(textField);
 		textField.setColumns(10);
 		
-		JButton btnSelecionar = new JButton("Procurar");
-		btnSelecionar.addActionListener( new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				try {	
-					JFileChooser fileChooser = new JFileChooser();
-					fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-					int result = fileChooser.showOpenDialog(getParent());
-					
-					File selectedFile = null;
-					if (result == JFileChooser.APPROVE_OPTION) {
-						selectedFile = fileChooser.getSelectedFile();
-					}
-					
-					txtArchive.setText(selectedFile.getAbsolutePath());
-				} catch (Exception ex) {
-					// empty
-				}
-				
-			}
-		} );
+		JLabel lblGerador = new JLabel("Caso 0, número de nós desejados");
+		lblGerador.setForeground(UIManager.getColor("Button.light"));
+		lblGerador.setFont(new Font("Lato Light", Font.BOLD, 14));
+		lblGerador.setBounds(101, 130, 280, 15);
+		panel_1.add(lblGerador);
 		
-		btnSelecionar.setBounds(253, 84, 117, 25);
-		panel_1.add(btnSelecionar);
+		textFieldGerador = new JTextField();
+		textFieldGerador.setBackground(Color.WHITE);
+		textFieldGerador.setBounds(80, 150, 260, 28);
+		panel_1.add(textFieldGerador);
+		textFieldGerador.setColumns(10);
+		
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(136, 164, 174, 28);
+		textField_1.setBounds(136, 200, 174, 28);
 		panel_1.add(textField_1);
 		textField_1.setColumns(10);
 		
-		JLabel lblQuantidadeDeHorrios = new JLabel("Quantidade de horários desejada");
+		JLabel lblQuantidadeDeHorrios = new JLabel("Quantidade de horários desejados");
 		lblQuantidadeDeHorrios.setFont(new Font("Lato Light", Font.BOLD, 14));
 		lblQuantidadeDeHorrios.setForeground(UIManager.getColor("Button.light"));
-		lblQuantidadeDeHorrios.setBounds(108, 123, 239, 28);
+		lblQuantidadeDeHorrios.setBounds(108, 175, 250, 28);
 		panel_1.add(lblQuantidadeDeHorrios);
 		
 		JButton btnRodar = new JButton("RODAR");
@@ -120,12 +125,32 @@ public class View_interface extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				String nHorarios = textField_1.getText();
-				Engine engine = new Engine( txtArchive.getText(), nHorarios );
+				Engine engine = new Engine( );
+				String casoTesteIndex = textField.getText();
+				int ctIndex = Integer.parseInt(casoTesteIndex);
+				int nColors = Integer.parseInt(nHorarios);
+				System.out.println(ctIndex);
+				
+				if( ctIndex !=  0) {
+					engine.readArchive(ctIndex);
+					System.out.println("leu");
+					engine.createGraph();
+					System.out.println("cirou");
+					engine.colouringKColors(nColors);
+					engine.showTimetable();
+				} else {
+					String gerador = textFieldGerador.getText();
+					int g = Integer.parseInt(gerador);
+					Graph graph = engine.generate(g, 1);
+					engine.setGraph(graph);
+					engine.colouringKColors(nColors);
+					engine.showTimetable();
+				}
 				
 			}
 		} );
 		
-		btnRodar.setBounds(253, 214, 117, 25);
+		btnRodar.setBounds(253, 230, 117, 25);
 		panel_1.add(btnRodar);
 		
 		

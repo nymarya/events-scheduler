@@ -44,6 +44,9 @@ public class Engine {
 		this.nHorarios = horarios;
 	}
 	
+	public Engine() {
+		activities = new ArrayList< ArrayList<String> >();
+	}
 	
 	
 	
@@ -85,6 +88,50 @@ public class Engine {
 	    
 	}
 	
+	/**
+	 * Lê arquivo de entrada e separa as atividades
+	 */
+	public void readArchive(int index) {
+		
+		
+		File f = new File("");
+		String absolutePath = f.getAbsolutePath();
+		
+		File folder = new File(absolutePath + "/src/data");
+		File[] listOfFiles = folder.listFiles();
+		
+		String filename = "";
+		for (int i = 0; i < index; i++) {
+			filename = listOfFiles[i].getName();
+		}
+		
+		
+	    try {
+	    	FileReader arq = new FileReader(absolutePath+"/src/data/" + filename);
+	    	BufferedReader lerArq = new BufferedReader(arq);
+	    	
+	    	String linha = lerArq.readLine(); // lê a primeira linha
+	    	
+	    	
+	    	while ( linha != null ) {
+	    		ArrayList<String> activity = new ArrayList<String>(); 
+	    		
+	    		String element[] = linha.split(" "); // separa a linha pelo espaçamento
+	    		for( int i=0; i < element.length; i++ ){
+		    		activity.add(element[i]); // adiciona atividade
+		    	}
+		    	activities.add(activity);
+	    		
+	    		linha = lerArq.readLine(); // lê a próxima linha
+	    	}
+	    	
+	    	arq.close();
+	    } catch (IOException e) {
+	        System.err.printf("Erro na abertura do arquivo: %s.\n",
+	        e.getMessage());
+	    }
+	    
+	}
 	
 	/**
 	 * Cria grafo a partir de arquivo de texto com as especificações do evento:
@@ -92,7 +139,7 @@ public class Engine {
 	 */
 	public void createGraph(  ) {
 				
-		readArchive();
+		//readArchive();
 		
 		graph = new Graph();
 		
@@ -472,7 +519,7 @@ public class Engine {
 			int palcosN = 0;
 			for(Vertex v : graph.getVertexes()) {
 				if(v.getColor().equals("color"+i)) {
-					result += String.format("%1$-10s", "| " + v.getLabel()); 
+					result += String.format("%1$-15s", "| " + v.getLabel()); 
 					palcosN++;
 				}
 			}
@@ -484,7 +531,8 @@ public class Engine {
 		
 		System.out.print("           ");
 		for(int i = 1; i <= palcos; i++) {
-			System.out.print("| Palco " + i + " ");
+			String s = String.format("%1$-15s", "| Palco " + i + " ");
+			System.out.print(s);
 		}
 		System.out.println("|");
 		System.out.println(result);
