@@ -87,7 +87,7 @@ public class View_interface extends JFrame {
 		lblRand.setBounds(101, 62, 260, 15);
 		panel_1.add(lblRand);
 		
-		JLabel lblCasos = new JLabel("1 a 30: casos de testes");
+		JLabel lblCasos = new JLabel("1 a "+listOfFiles.length+": casos de testes");
 		lblCasos.setForeground(UIManager.getColor("Button.light"));
 		lblCasos.setFont(new Font("Lato Light", Font.BOLD, 14));
 		lblCasos.setBounds(101, 77, 260, 15);
