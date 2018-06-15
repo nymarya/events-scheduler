@@ -322,7 +322,9 @@ public class Graph implements Cloneable, Serializable {
 		
 	}
 	
-	
+	/**
+	 * Remove todas as cores dos vértices do grafo
+	 */
 	public void reset( ){
 		
 		for( int i=0; i<vertexList.size(); i++ ){

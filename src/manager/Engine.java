@@ -1,6 +1,5 @@
 package manager;
 
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -11,7 +10,6 @@ import java.util.Comparator;
 import java.util.ListIterator;
 import java.util.Random;
 
-import javax.swing.JTextField;
 
 import graph.Graph;
 import graph.Vertex;
@@ -28,26 +26,16 @@ public class Engine {
 	private ArrayList< ArrayList <String> > activities; 
 	
 	private Graph graphTemp;
-	ArrayList<Vertex> vertexes;	
+	private ArrayList<Vertex> vertexes;	
 	private int color;
-	
-	String archivePath;
-	String nHorarios;
-	
+
 	
 	/**
 	 * Constrói objeto da classe Engine.
-	 */
-	public Engine( String path, String horarios ){
-		activities = new ArrayList< ArrayList<String> >();
-		this.archivePath = path;
-		this.nHorarios = horarios;
-	}
-	
+	 */	
 	public Engine() {
 		activities = new ArrayList< ArrayList<String> >();
 	}
-	
 	
 	
 	
@@ -138,9 +126,7 @@ public class Engine {
 	 * Atividades: vertices; Relação entre vertices: arestas.
 	 */
 	public void createGraph(  ) {
-				
-		//readArchive();
-		
+						
 		graph = new Graph();
 		
 		
@@ -218,7 +204,6 @@ public class Engine {
 		
 		long seed = System.nanoTime();
 		Collections.shuffle(origins, new Random(seed));
-		//Collections.shuffle(destinations, new Random(seed));
 		int e = 1;
 		
 		// cria de fato o grafo, ignorando algumas arestas
@@ -316,11 +301,8 @@ public class Engine {
 
 			graph.reset();
 
-			
 			// colore grafo novamente
 			generateColouringGraph( );
-			
-			
 			
 			
 		}
@@ -355,7 +337,7 @@ public class Engine {
 			
 			
 			// escolhe vertice de maior grau
-			//Vertex vCurrent = itr.next();
+			// Vertex vCurrent = itr.next();
 			Vertex vCurrent = vertexes.get(0);
 			nonAdjIndex = 0;
 			
@@ -539,6 +521,11 @@ public class Engine {
 		
 	}
 	
+	
+	/**
+	 * Recupera tabela com distribuição dos horários
+	 * @return Tabela com distribuição
+	 */
 	public String getTimetable() {
 		int palcos = 0;
 		String result = "";
@@ -563,5 +550,6 @@ public class Engine {
 		timetable += "|\n" + result + "\n";
 		return timetable;
 	}
+	
 	
 }
