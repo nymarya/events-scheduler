@@ -9,6 +9,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Logger;
 
 import graph.Edge;
 import graph.Vertex;
@@ -24,6 +26,9 @@ public class Graph implements Cloneable, Serializable {
 	private ArrayList<Vertex> vertexList;
 	private ArrayList<Edge> edgeList;
 	int chromaticNumber;
+	
+	private static final Logger LOGGER = Logger.getLogger( Graph.class.getName() );
+
 	
 	
 	/**
@@ -171,29 +176,30 @@ public class Graph implements Cloneable, Serializable {
 	public Graph clone()
 	{
 		Graph object = null;
-		try {
-			FileOutputStream fileOutputStream = new FileOutputStream("object.dat");
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+		//try-with-resources
+		try( FileOutputStream fileOutputStream = new FileOutputStream("object.dat");
+			 ObjectOutputStream	objectOutputStream = new ObjectOutputStream(fileOutputStream);
+			 FileInputStream fileInputStream = new FileInputStream("object.dat");
+			 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+			 ){
+			
+			
 			objectOutputStream.writeObject(this);
 			fileOutputStream.flush();
-			fileOutputStream.close();
 			objectOutputStream.flush();
-			objectOutputStream.close();
-			FileInputStream fileInputStream = new FileInputStream("object.dat");
-			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+			
+			
 			object = (Graph) objectInputStream.readObject();
-	                fileInputStream.close();
-			objectInputStream.close();
+	        
+			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.info(e.getMessage());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.info(e.getMessage());
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			LOGGER.info(e.getMessage());
+		} 
+		
 		return object;
 	}
 	
@@ -240,8 +246,8 @@ public class Graph implements Cloneable, Serializable {
 	public void mergeVertexes( Vertex v1, Vertex v2 ){
 		
 		
-		ArrayList<Edge> adjacentsV1 = v1.getAdjacentVertexes();
-		ArrayList<Edge> adjacentsV2 = v2.getAdjacentVertexes();
+		ArrayList<Edge> adjacentsV1 = (ArrayList<Edge>) v1.getAdjacentVertexes();
+		ArrayList<Edge> adjacentsV2 = (ArrayList<Edge>) v2.getAdjacentVertexes();
 		
 
 		// percorre lista de adjacencia de v2

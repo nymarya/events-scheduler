@@ -1,7 +1,5 @@
 package view;
 
-import java.io.IOException;
-
 import manager.Engine;
 
 /**
@@ -11,11 +9,10 @@ import manager.Engine;
 */
 public class Main {
 
-	public static void main( String [] args ) throws IOException {
+	public static void main( String [] args )  {
 			    
 		Engine engine = new Engine();
 		engine.createGraph();
-		System.out.println("\n\n COLORACAO\n\n");
 		engine.generateColouringGraph();
 
 	}

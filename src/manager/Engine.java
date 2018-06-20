@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.ListIterator;
 import java.util.Random;
+import java.util.logging.Logger;
 
 import graph.Graph;
 import graph.Vertex;
@@ -28,6 +29,9 @@ public class Engine {
 	private Graph graphTemp;
 	ArrayList<Vertex> vertexes;
 	
+	private static final Logger LOGGER = Logger.getLogger( Engine.class.getName() );
+	private static final String COLOR = "color"; 
+	
 	/**
 	 * Constrói objeto da classe Engine.
 	 */
@@ -45,9 +49,10 @@ public class Engine {
 		String absolutePath = f.getAbsolutePath();
 		
 		
-	    try {
-	    	FileReader arq = new FileReader(absolutePath+"/src/data/teste4.txt");
-	    	BufferedReader lerArq = new BufferedReader(arq);
+	    try(FileReader arq = new FileReader(absolutePath+"/src/data/teste4.txt");
+		    BufferedReader lerArq = new BufferedReader(arq);
+	    	) {
+	    	
 	    	
 	    	String linha = lerArq.readLine(); // lê a primeira linha
 	    	
@@ -55,7 +60,7 @@ public class Engine {
 	    	while ( linha != null ) {
 	    		ArrayList<String> activity = new ArrayList<String>(); 
 	    		
-	    		String element[] = linha.split(" "); // separa a linha pelo espaçamento
+	    		String[] element = linha.split(" "); // separa a linha pelo espaçamento
 	    		for( int i=0; i < element.length; i++ ){
 		    		activity.add(element[i]); // adiciona atividade
 		    	}
@@ -64,17 +69,10 @@ public class Engine {
 	    		linha = lerArq.readLine(); // lê a próxima linha
 	    	}
 	    	
-	    	arq.close();
 	    } catch (IOException e) {
-	        System.err.printf("Erro na abertura do arquivo: %s.\n",
-	        e.getMessage());
+	    	LOGGER.info(e.getMessage());
 	    }
-	 
-	    
-	    // testando se deu certo
-	    for( int i=0; i<activities.size(); i++ ){
-	    	System.out.println(activities.get(i));
-	    }
+	
 	    
 	}
 	
@@ -133,9 +131,6 @@ public class Engine {
 				
 			}
 		}
-				
-		graph.showVextexList();
-		//graph.showEdgeList();
 
 				
 	}
@@ -167,7 +162,7 @@ public class Engine {
 		
 		long seed = System.nanoTime();
 		Collections.shuffle(origins, new Random(seed));
-		//Collections.shuffle(destinations, new Random(seed));
+
 		int e = 1;
 		
 		// cria de fato o grafo, ignorando algumas arestas
@@ -247,11 +242,9 @@ public class Engine {
 		
 		// percorre lista de vertices
 		int nonAdjIndex = 0;
-		int size = vertexes.size();
 		while( vertexes.size() >= 2){
 			
 			// escolhe vertice de maior grau
-			//Vertex vCurrent = itr.next();
 			Vertex vCurrent = vertexes.get(0);
 			nonAdjIndex = 0;
 			
@@ -262,7 +255,7 @@ public class Engine {
 
 			if( indexV != -1 ){
 				Vertex v = graph.getVertex(indexV);
-				v.setColor("color"+color);
+				v.setColor(COLOR+color);
 			}
 			
 			
@@ -293,7 +286,7 @@ public class Engine {
 							
 							if( indexV != -1 ){
 								Vertex v = graph.getVertex(indexV);
-								v.setColor("color"+color);
+								v.setColor(COLOR+color);
 							}
 
 							// merge vertices
@@ -321,7 +314,7 @@ public class Engine {
 							
 							if( indexV != -1 ){
 								Vertex v = graph.getVertex(indexV);
-								v.setColor("color"+color);
+								v.setColor(COLOR+color);
 							}
 							
 							// merge vertices
@@ -330,7 +323,6 @@ public class Engine {
 						
 					}else{
 						nonAdjIndex++;
-						continue;
 					}
 					
 					
@@ -350,7 +342,7 @@ public class Engine {
 		
 		// Trata caso de sobrar um vertice
 		if( vertexes.size() == 1 && vertexes.get(0).getColor() == null) {
-			vertexes.get(0).setColor("color"+color);
+			vertexes.get(0).setColor(COLOR+color);
 		}
 		
 		// Atualiza número de cores utilizadas para colorir o grafo

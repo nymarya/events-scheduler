@@ -2,9 +2,6 @@ package test;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ListIterator;
 
 import org.junit.Test;
 
@@ -248,8 +245,6 @@ public class BurkeTest {
 		graph.addEdge(e14);
 		graph.addEdge(e15);
 		graph.addEdge(e16);
-		
-		//assertTrue(!v3.isAdjacent(v5));
 		
 		
 		engine.setGraph(graph);

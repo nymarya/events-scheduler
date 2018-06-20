@@ -126,9 +126,6 @@ public class GraphTest {
 		v5 = graph.getVertex(4);
 		v3 = graph.getVertex(2);
 		v7 = graph.getVertex(6);
-		v10 = graph.getVertex(9);
-		v11 = graph.getVertex(10);
-		v12 = graph.getVertex(11);
 			
 		
 		graph.mergeVertexes(v5, v3);
