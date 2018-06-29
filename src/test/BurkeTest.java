@@ -2,9 +2,6 @@ package test;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ListIterator;
 
 import org.junit.Test;
 

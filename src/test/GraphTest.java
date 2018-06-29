@@ -16,17 +16,17 @@ public class GraphTest {
 		Graph graph = new Graph();
 		
 		Vertex v1 = new Vertex("1"); 
-		Vertex v2 = new Vertex("2"); 
-		Vertex v3 = new Vertex("3"); 
-		Vertex v4 = new Vertex("4"); 
-		Vertex v5 = new Vertex("5"); 
-		Vertex v6 = new Vertex("6"); 
-		Vertex v7 = new Vertex("7"); 
-		Vertex v8 = new Vertex("8"); 
-		Vertex v9 = new Vertex("9"); 
-		Vertex v10 = new Vertex("10"); 
-		Vertex v11 = new Vertex("11");
-		Vertex v12 = new Vertex("12");
+		Vertex v2 = new Vertex("20"); 
+		Vertex v3 = new Vertex("30"); 
+		Vertex v4 = new Vertex("40"); 
+		Vertex v5 = new Vertex("50"); 
+		Vertex v6 = new Vertex("60"); 
+		Vertex v7 = new Vertex("70"); 
+		Vertex v8 = new Vertex("80"); 
+		Vertex v9 = new Vertex("90"); 
+		Vertex v10 = new Vertex("100"); 
+		Vertex v11 = new Vertex("110");
+		Vertex v12 = new Vertex("120");
 		
 		Edge e1 = new Edge(v1, v5);
 		v1.addAdjacent(e1);
@@ -126,9 +126,6 @@ public class GraphTest {
 		v5 = graph.getVertex(4);
 		v3 = graph.getVertex(2);
 		v7 = graph.getVertex(6);
-		v10 = graph.getVertex(9);
-		v11 = graph.getVertex(10);
-		v12 = graph.getVertex(11);
 			
 		
 		graph.mergeVertexes(v5, v3);

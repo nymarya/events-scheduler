@@ -1,7 +1,14 @@
 package graph;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 
 /**
@@ -14,6 +21,8 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 	private String label; 
 	private String color;
 	private ArrayList<Edge> adjacents; // lista de adjacencia do vertice
+	
+	private static final Logger LOGGER = Logger.getLogger( Vertex.class.getName() );
 	
 	// construtor da classe
 	public Vertex( String label ){
@@ -34,7 +43,7 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 	 * Exibe vértice
 	 */
 	public void showVertex( ) {
-		System.out.println(label);
+		LOGGER.info(label);
 	}
 	/**
 	 * Recupera identificador do vértice
@@ -105,6 +114,15 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
         final Vertex other = (Vertex) obj;
         return this.getLabel().equals(other.getLabel());
     }
+	
+	/**
+	 * Atualiza hash code para vértices.
+	 * @return Hash code
+	 */
+	@Override
+	public int hashCode() {
+		return this.getLabel().hashCode();
+	}
 
 	/**
 	 * Checa se vértices são adjacentes
@@ -119,6 +137,41 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Cria cópia do vértice através da serialização.
+	 * @return Cópia do vértice
+	 */
+	@Override
+	public Vertex clone()
+	{
+		Vertex object = null;
+		//try-with-resources
+		try( FileOutputStream fileOutputStream = new FileOutputStream("object.dat");
+			 ObjectOutputStream	objectOutputStream = new ObjectOutputStream(fileOutputStream);
+			 FileInputStream fileInputStream = new FileInputStream("object.dat");
+			 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+			 ){
+			
+			
+			objectOutputStream.writeObject(this);
+			fileOutputStream.flush();
+			objectOutputStream.flush();
+			
+			
+			object = (Vertex) objectInputStream.readObject();
+	        
+			
+		} catch (FileNotFoundException e) {
+			LOGGER.info(e.getMessage());
+		} catch (IOException e) {
+			LOGGER.info(e.getMessage());
+		} catch (ClassNotFoundException e) {
+			LOGGER.info(e.getMessage());
+		} 
+		
+		return object;
 	}
 	
 	

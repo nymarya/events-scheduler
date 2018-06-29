@@ -1,16 +1,26 @@
- ( 2, 4) peso: 210
- ( 6, 0) peso: 218
- ( 7, 4) peso: 233
- ( 4, 5) peso: 243
- ( 1, 2) peso: 255
- ( 7, 1) peso: 263
- ( 6, 3) peso: 271
- ( 7, 6) peso: 275
- ( 1, 5) peso: 281
- ( 1, 3) peso: 293
+ ( 3, 6) peso: 260
+ ( 1, 18) peso: 260
+ ( 5, 10) peso: 266
+ ( 3, 18) peso: 267
+ ( 2, 19) peso: 267
+ ( 3, 7) peso: 272
+ ( 13, 2) peso: 276
+ ( 16, 10) peso: 280
+ ( 18, 9) peso: 283
+ ( 1, 10) peso: 284
+ ( 0, 8) peso: 284
+ ( 5, 15) peso: 285
+ ( 14, 15) peso: 286
+ ( 11, 15) peso: 286
+ ( 4, 12) peso: 287
+ ( 13, 15) peso: 288
+ ( 6, 9) peso: 293
+ ( 16, 0) peso: 294
+ ( 6, 5) peso: 299
+ ( 17, 9) peso: 300
 
-           | Palco 1      | Palco 2      | Palco 3      | Palco 4      | Palco 5      |
-Horário 1: | 1            | 4            | 6            |
-Horário 2: | 0            | 2            | 3            | 5            | 7            |
+           | Palco 1      | Palco 2      | Palco 3      | Palco 4      | Palco 5      | Palco 6      | Palco 7      | Palco 8      | Palco 9      | Palco 10     | Palco 11     |
+Horário 1: | 0            | 2            | 4            | 6            | 7            | 10           | 15           | 17           | 18           |
+Horário 2: | 1            | 3            | 5            | 8            | 9            | 11           | 12           | 13           | 14           | 16           | 19           |
 
 

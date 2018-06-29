@@ -1,6 +1,8 @@
 package graph;
 
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -14,6 +16,8 @@ public class Edge implements Serializable {
 	private Vertex origin; // vertice na "ponta de origem" da aresta 
 	private Vertex destination; // vertice de destino da aresta
 	private int weight; // peso da aresta
+	
+	private static final Logger LOGGER = Logger.getLogger( Edge.class.getName() );
 
 	/**
 	 * Constrói objeto para a classe Edge, uma aresta não-direcionada
@@ -97,12 +101,11 @@ public class Edge implements Serializable {
 	 * Exibe aresta
 	 */
 	public void showEdge( ){
-		System.out.print("Vertice origem: ");
+		LOGGER.info("Vertice origem: ");
 		origin.showVertex();
-		System.out.print("Vertice destino: ");
+		LOGGER.info("Vertice destino: ");
 		destination.showVertex();
-		System.out.print("Peso: " +weight);
-		System.out.println();
+		LOGGER.log(Level.INFO, "Peso: {0}", weight);
 	}
 	
 	/**

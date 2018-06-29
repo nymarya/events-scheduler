@@ -4,8 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import graph.Graph;
+
 import manager.Engine;
+import graph.Graph;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -17,6 +18,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.logging.Logger;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -26,18 +28,22 @@ import java.awt.Color;
 import javax.swing.UIManager;
 import java.awt.Font;
 
-public class View_interface extends JFrame {
+public class ViewInterface extends JFrame {
 
 	private JPanel panel;
-	private JTextField txt_testCaseIndex;
+	private JTextField txtTestCaseIndex;
 	private JTextField nSchedules;
 	private JTextField textFieldGerador;
+	
+	private static final Logger LOGGER = Logger.getLogger( ViewInterface.class.getName() );
+	private static final String BTN_COLOR = "Button.light";
+	private static final String FONT = "Lato Light";
 	
 
 	/**
 	 * Create the frame.
 	 */
-	public View_interface() {
+	public ViewInterface() {
 		
 		// configurações do panel
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,22 +51,22 @@ public class View_interface extends JFrame {
 		panel = new JPanel();
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(panel);
-		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{440, 0};
-		gbl_contentPane.rowHeights = new int[]{1, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		panel.setLayout(gbl_contentPane);
+		GridBagLayout gblContentPane = new GridBagLayout();
+		gblContentPane.columnWidths = new int[]{440, 0};
+		gblContentPane.rowHeights = new int[]{1, 0, 0};
+		gblContentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gblContentPane.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		panel.setLayout(gblContentPane);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
-		panel_1.setLayout(null);
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.gridheight = 2;
-		gbc_panel.fill = GridBagConstraints.BOTH;
-		gbc_panel.gridx = 0;
-		gbc_panel.gridy = 0;
-		panel.add(panel_1, gbc_panel);
+		JPanel panel1 = new JPanel();
+		panel1.setBackground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
+		panel1.setLayout(null);
+		GridBagConstraints gbcPanel = new GridBagConstraints();
+		gbcPanel.gridheight = 2;
+		gbcPanel.fill = GridBagConstraints.BOTH;
+		gbcPanel.gridx = 0;
+		gbcPanel.gridy = 0;
+		panel.add(panel1, gbcPanel);
 		
 		
 		// recupera caminho absoluto da pasta data
@@ -73,55 +79,55 @@ public class View_interface extends JFrame {
 		
 		// Label para escolher arquivo de teste
 		JLabel lblSelecioneUmArquivo = new JLabel("Escolha entre um número de 0 a " + listOfFiles.length);
-		lblSelecioneUmArquivo.setForeground(UIManager.getColor("Button.light"));
-		lblSelecioneUmArquivo.setFont(new Font("Lato Light", Font.BOLD, 14));
+		lblSelecioneUmArquivo.setForeground(UIManager.getColor(BTN_COLOR));
+		lblSelecioneUmArquivo.setFont(new Font(FONT, Font.BOLD, 14));
 		lblSelecioneUmArquivo.setBounds(101, 47, 260, 15);
-		panel_1.add(lblSelecioneUmArquivo);
+		panel1.add(lblSelecioneUmArquivo);
 		
 		JLabel lblRand = new JLabel("0: grafo gerado randômicamente");
-		lblRand.setForeground(UIManager.getColor("Button.light"));
-		lblRand.setFont(new Font("Lato Light", Font.BOLD, 14));
+		lblRand.setForeground(UIManager.getColor(BTN_COLOR));
+		lblRand.setFont(new Font(FONT, Font.BOLD, 14));
 		lblRand.setBounds(101, 62, 260, 15);
-		panel_1.add(lblRand);
+		panel1.add(lblRand);
 		
 		JLabel lblCasos = new JLabel("1 a "+listOfFiles.length+": casos de testes");
-		lblCasos.setForeground(UIManager.getColor("Button.light"));
-		lblCasos.setFont(new Font("Lato Light", Font.BOLD, 14));
+		lblCasos.setForeground(UIManager.getColor(BTN_COLOR));
+		lblCasos.setFont(new Font(FONT, Font.BOLD, 14));
 		lblCasos.setBounds(101, 77, 260, 15);
-		panel_1.add(lblCasos);
+		panel1.add(lblCasos);
 		
 		// Campo de texto para escolher arquivo de teste
-		txt_testCaseIndex = new JTextField();
-		txt_testCaseIndex.setBackground(Color.WHITE);
-		txt_testCaseIndex.setBounds(80, 95, 260, 28);
-		panel_1.add(txt_testCaseIndex);
-		txt_testCaseIndex.setColumns(10);
+		txtTestCaseIndex = new JTextField();
+		txtTestCaseIndex.setBackground(Color.WHITE);
+		txtTestCaseIndex.setBounds(80, 95, 260, 28);
+		panel1.add(txtTestCaseIndex);
+		txtTestCaseIndex.setColumns(10);
 		
 		// label para escolher quantidade de vertices desejados
 		JLabel lblGerador = new JLabel("Caso 0, número de nós desejados");
-		lblGerador.setForeground(UIManager.getColor("Button.light"));
-		lblGerador.setFont(new Font("Lato Light", Font.BOLD, 14));
+		lblGerador.setForeground(UIManager.getColor(BTN_COLOR));
+		lblGerador.setFont(new Font(FONT, Font.BOLD, 14));
 		lblGerador.setBounds(101, 130, 280, 15);
-		panel_1.add(lblGerador);
+		panel1.add(lblGerador);
 		
 		// campo de texto para escolher quantidade de vertices desejados
 		textFieldGerador = new JTextField();
 		textFieldGerador.setBackground(Color.WHITE);
 		textFieldGerador.setBounds(80, 150, 260, 28);
-		panel_1.add(textFieldGerador);
+		panel1.add(textFieldGerador);
 		textFieldGerador.setColumns(10);
 		
 		// label para escolher quantidade de horários do evento 
 		JLabel lblQuantidadeDeHorrios = new JLabel("Quantidade de horários desejados");
-		lblQuantidadeDeHorrios.setFont(new Font("Lato Light", Font.BOLD, 14));
-		lblQuantidadeDeHorrios.setForeground(UIManager.getColor("Button.light"));
+		lblQuantidadeDeHorrios.setFont(new Font(FONT, Font.BOLD, 14));
+		lblQuantidadeDeHorrios.setForeground(UIManager.getColor(BTN_COLOR));
 		lblQuantidadeDeHorrios.setBounds(108, 175, 250, 28);
-		panel_1.add(lblQuantidadeDeHorrios);
+		panel1.add(lblQuantidadeDeHorrios);
 		
 		// campo de texto para escolher quantidade de horários do evento 
 		nSchedules = new JTextField();
 		nSchedules.setBounds(136, 200, 174, 28);
-		panel_1.add(nSchedules);
+		panel1.add(nSchedules);
 		nSchedules.setColumns(10);
 		
 		// botão para rodar o algoritmo de coloração 
@@ -133,7 +139,7 @@ public class View_interface extends JFrame {
 
 				String nHorarios = nSchedules.getText();
 				Engine engine = new Engine( );
-				String casoTesteIndex = txt_testCaseIndex.getText();
+				String casoTesteIndex = txtTestCaseIndex.getText();
 				int ctIndex = Integer.parseInt(casoTesteIndex);
 				int nColors = Integer.parseInt(nHorarios);
 				
@@ -158,18 +164,21 @@ public class View_interface extends JFrame {
 				
 				// salva resultado em arquivo
 				PrintWriter writer;
-				try {
-					FileWriter f  = new FileWriter(absolutePath + "/results/result.txt");
-					writer = new PrintWriter(f);
+				
+				File file = new File("");
+				String absolutePath = file.getAbsolutePath();
+				try (FileWriter fileWriter  = new FileWriter(absolutePath + "/results/result.txt"); ){
+					
+					writer = new PrintWriter(fileWriter);
 					writer.println(engine.getGraph().toString());
 					writer.println(engine.getTimetable());
 					writer.close();
 				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
+					LOGGER.info(e1.getMessage());
 				} catch (UnsupportedEncodingException e1) {
-					e1.printStackTrace();
+					LOGGER.info(e1.getMessage());
 				} catch (IOException e1) {
-					e1.printStackTrace();
+					LOGGER.info(e1.getMessage());
 				}
 				
 				
@@ -177,7 +186,7 @@ public class View_interface extends JFrame {
 		} );
 		
 		btnRodar.setBounds(253, 230, 117, 25);
-		panel_1.add(btnRodar);
+		panel1.add(btnRodar);
 		
 		
 		
