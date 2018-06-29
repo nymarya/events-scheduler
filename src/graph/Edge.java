@@ -1,6 +1,7 @@
 package graph;
 
 import java.io.Serializable;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -104,7 +105,7 @@ public class Edge implements Serializable {
 		origin.showVertex();
 		LOGGER.info("Vertice destino: ");
 		destination.showVertex();
-		LOGGER.info("Peso: " +weight + "\n");
+		LOGGER.log(Level.INFO, "Peso: {0}", weight);
 	}
 	
 	/**
@@ -122,6 +123,30 @@ public class Edge implements Serializable {
 			return null;
 		}
 		
+	}
+	
+	/**
+	 * Compara duas arestas por peso.
+	 * @param e2 Aresta a ser comparada
+	 * @return 0 se as arestas possuem mesmo peso, 1 se o peso da aresta é maior que o peso de 
+	 * e2, -1 caso contrário
+	 */
+	public int compareTo(Edge e2) {
+        if (this.getWeight() > e2.getWeight()) {
+            return 1;
+        }
+        if (this.getWeight() < e2.getWeight()) {
+            return -1;
+        }
+        return 0;
+    }
+	
+	@Override
+	public String toString( ){
+		String s = " ( " + origin.getLabel() + ", " + destination.getLabel() + ")";
+		s += " peso: " + weight;
+		
+		return s;
 	}
 	
 	

@@ -1,0 +1,16 @@
+ ( 2, 4) peso: 210
+ ( 6, 0) peso: 218
+ ( 7, 4) peso: 233
+ ( 4, 5) peso: 243
+ ( 1, 2) peso: 255
+ ( 7, 1) peso: 263
+ ( 6, 3) peso: 271
+ ( 7, 6) peso: 275
+ ( 1, 5) peso: 281
+ ( 1, 3) peso: 293
+
+           | Palco 1      | Palco 2      | Palco 3      | Palco 4      | Palco 5      |
+Horário 1: | 1            | 4            | 6            |
+Horário 2: | 0            | 2            | 3            | 5            | 7            |
+
+

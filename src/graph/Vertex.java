@@ -43,7 +43,7 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 	 * Exibe vértice
 	 */
 	public void showVertex( ) {
-		LOGGER.info(label + "\n");
+		LOGGER.info(label);
 	}
 	/**
 	 * Recupera identificador do vértice
@@ -173,6 +173,9 @@ public class Vertex implements Comparable<Vertex>, Cloneable, Serializable {
 		
 		return object;
 	}
+	
+	
+
 	
 	
 }

@@ -1,6 +1,5 @@
 package view;
 
-import manager.Engine;
 
 /**
 * Classe principal
@@ -10,11 +9,9 @@ import manager.Engine;
 public class Main {
 
 	public static void main( String [] args )  {
-			    
-		Engine engine = new Engine();
-		engine.createGraph();
-		engine.generateColouringGraph();
 
+		ViewInterface frame = new ViewInterface();
+		frame.setVisible(true);
 	}
 	
 }
