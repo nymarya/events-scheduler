@@ -1,6 +1,6 @@
 # events-scheduler
 
-Plataforma de distribuição dos horários das atividades de um evento
+Plataforma de distribuição dos horários das atividades de um evento utilizando coloração de vértices em grafos e boas práticas de programação.
 
 ### Diretrizes
 O padrão de programação utilizado é especificado pelo [guidestyle do google](https://google.github.io/styleguide/javaguide.html).
