@@ -6,7 +6,7 @@ Plataforma de distribuição dos horários das atividades de um evento utilizand
 O padrão de programação utilizado é especificado pelo [guidestyle do google](https://google.github.io/styleguide/javaguide.html).
 
 ## Análise estática
-As ferramentas utilizadas para a analise estática do código foram [SonarQube](https://sonarqube.org) e [FindBugs](http://findbugs.sourceforge.net).
+As ferramentas utilizadas para a análise estática do código foram [SonarQube](https://sonarqube.org) e [FindBugs](http://findbugs.sourceforge.net).
 
 ## Testes unitários
 Os testes unitários foram realizados com o frameworkJUnit.
